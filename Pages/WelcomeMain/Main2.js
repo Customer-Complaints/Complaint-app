@@ -53,6 +53,7 @@ export default function MainPage2(){
     );
 }
 
+// make changes
 const styles = StyleSheet.create({
     container: {
         flex: 1,
