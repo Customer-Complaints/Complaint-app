@@ -61,7 +61,7 @@ export default function Rating(){
                 <TouchableOpacity
                     activeOpacity ={0.7}
                     style={styles.buttonStyle}
-                    onPress={() => alert('Review Sent')}
+                    onPress={() => alert('Review Sent \nReview Info :- \nComplaint : ' + retailNme + '\nStars : ' + ratingFdback)}
                 >
                     <Text>send</Text>
                     {

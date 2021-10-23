@@ -1,17 +1,18 @@
-import { StatusBar } from 'expo-status-bar';
-import React, {useState} from 'react';
-import { StyleSheet, Text, View, TextInput} from 'react-native';
+import { StatusBar } from "expo-status-bar";
+import React, { useState } from "react";
+import { StyleSheet, Text, View, TextInput, TouchableOpacity } from "react-native";
 
-export default function LoginPage(){
-
+export default function LoginPage() {
     const [textName, setTextName] = React.useState(null);
     const [textMail, setTextMail] = React.useState(null);
 
-    return(
+    return (
         <View style={styles.container}>
-            <StatusBar style='auto'/>
+            <StatusBar style="auto" />
             <View style={styles.headerName}>
-                <Text style={{fontSize: 20, fontWeight: 'bold'}}>Nam Consumer</Text>
+                <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+                    Nam Consumer
+                </Text>
             </View>
 
             <View style={styles.titlePge}>
@@ -19,81 +20,91 @@ export default function LoginPage(){
             </View>
 
             <View style={styles.loginFrm}>
-                <View style={styles.loginDetails}>
+                {/* <View style={styles.loginDetails}> */}
                     <TextInput
+                    style={styles.loginDetails}
                         onChangeText={setTextName}
-                        placeholder='Username'
+                        placeholder="Username"
                         value={textName}
                     />
-                </View>
+                {/* </View> */}
 
-                <View style={styles.loginDetails}>
+                {/* <View style={styles.loginDetails}> */}
                     <TextInput
+                    style={styles.loginDetails}
                         onChangeText={setTextMail}
-                        placeholder='email'
+                        placeholder="email"
                         value={textMail}
                     />
+                {/* </View> */}
+            </View>
+
+            <TouchableOpacity
+                onPress={alert("Name : " + textName + "Email : " + textMail)}
+            >
+                <View style={styles.loginBtn}>
+                    <Text style={{ color: "#fff" }}>Login button</Text>
                 </View>
-            </View>
+            </TouchableOpacity>
 
-            <View style={styles.loginBtn}>
-                <Text  style={{color: '#fff'}}>Login button</Text>
-            </View>
+            <TouchableOpacity onPress={alert("You have logged with Gmail")}>
+                <View style={styles.loginAuth}>
+                    <Text>Login GoogleOAuth</Text>
+                </View>
+            </TouchableOpacity>
 
-            <View style={styles.loginAuth}>
-                <Text>Login GoogleOAuth</Text>
-            </View>
-
-            <View style={styles.signupBtn}>
-                <Text>New User</Text>
-            </View>
+            <TouchableOpacity onPress={alert("New User sign up")}>
+                <View style={styles.signupBtn}>
+                    <Text>New User</Text>
+                </View>
+            </TouchableOpacity>
         </View>
     );
 }
 
-const styles= StyleSheet.create({
-    container:{
+const styles = StyleSheet.create({
+    container: {
         flex: 1,
-        width: '100%',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#fff'
+        width: "100%",
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#fff",
     },
-    headerName:{
-        justifyContent: 'center'
+    headerName: {
+        justifyContent: "center",
     },
-    titlePge:{
-        justifyContent: 'center',
-        alignItems: 'center'
+    titlePge: {
+        justifyContent: "center",
+        alignItems: "center",
     },
-    loginFrm:{
-        width: '80%',
-        justifyContent: 'center',
-        alignItems: 'center'
+    loginFrm: {
+        width: "80%",
+        justifyContent: "center",
+        alignItems: "center",
     },
-    loginDetails:{
-        width: '100%',
+    loginDetails: {
+        width: "100%",
         height: 50,
         borderWidth: 2,
         borderRadius: 5,
-        borderColor: 'rgba(160, 160, 160, 1)',
+        borderColor: "rgba(160, 160, 160, 1)",
         margin: 5,
-        padding: 10
+        padding: 10,
     },
-    loginBtn:{
-        justifyContent: 'center',
-        alignItems: 'center',
+    loginBtn: {
+        justifyContent: "center",
+        alignItems: "center",
         height: 40,
         width: 100,
-        backgroundColor: 'cyan',
+        backgroundColor: "cyan",
         borderRadius: 5,
     },
-    loginAuth:{
-        justifyContent: 'center',
-        alignItems: 'center'
+    loginAuth: {
+        justifyContent: "center",
+        alignItems: "center",
     },
-    signupBtn:{
-        justifyContent: 'center',
-        alignItems: 'center'
-    }
-})
+    signupBtn: {
+        justifyContent: "center",
+        alignItems: "center",
+    },
+});

@@ -11,13 +11,20 @@ import MainPage2 from './Pages/WelcomeMain/Main2';
 import Rating from './Pages/Rating/index';
 import CustomerRevs from './Pages/CustomerRevs/index';
 import Complaints from './Pages/Complaints/index';
+import Navigation from './Navigation/Navigation';
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <StatusBar style="auto" />
-      <MainPage2/>
-    </View>
+    // <View style={styles.container}>
+    //   <StatusBar style="auto" />
+    //   {/* <MainPage2/> */}
+    //   {/* <Rating/> */}
+    //   {/* <Complaints/> */}
+    //   {/* <CustomerRevs/> */}
+    //   {/* <MviewApp/> */}
+      
+    // </View>
+    <Navigation/>
   );
 }
 
