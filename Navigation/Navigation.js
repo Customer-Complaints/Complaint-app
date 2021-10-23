@@ -10,6 +10,10 @@ import MviewApp from "../Pages/WelcomeMain/Mview";
 import LoginPage from "../Pages/Signup/login";
 // import { NativeRouter, Route, Link} from '@types/react-router-native';
 
+
+
+
+
 function NaviTab({ navigation }) {
     return (
         <>
