@@ -12,7 +12,7 @@ export default function Rating(){
     const [ retailNme, setRetailNme ] = React.useState();
     const [ complaintIn, setComplaintIn ] = React.useState();
 
-    const [ defaultRating, setDefaultRating ] = React.useState(2);
+    const [ defaultRating, setDefaultRating ] = React.useState(0);
     const [ maxRating, setMaxRating ] = React.useState([1,2,3,4,5]);
 
     const starImgFilled = 'https://raw.githubusercontent.com/tranhonghan/images/main/star_filled.png';

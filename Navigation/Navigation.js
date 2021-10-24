@@ -5,9 +5,10 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import MainPage2 from "../Pages/WelcomeMain/Main2";
 import Complaints from "../Pages/Complaints";
+import CustomerComplaint from "../Pages/Complaints/Customer/complaints";
 import Rating from "../Pages/Rating";
 import MviewApp from "../Pages/WelcomeMain/Mview";
-import LoginPage from "../Pages/Signup/login";
+import LoginNav from "../Pages/Signup/login";
 // import { NativeRouter, Route, Link} from '@types/react-router-native';
 
 
@@ -17,14 +18,11 @@ import LoginPage from "../Pages/Signup/login";
 function NaviTab({ navigation }) {
     return (
         <>
-            <LoginPage/>
+            <LoginNav/>
             {/* <MainPage2 /> */}
 
             
             <View style={styles.navcontainer}>
-                {/* <Text>
-        Navigation Router Here
-    </Text> */}
 
                 <View style={styles.navicons}>
                     <TouchableOpacity
@@ -32,7 +30,7 @@ function NaviTab({ navigation }) {
                     >
                         <View style={{ alignItems: "center" }}>
                             <Ionicons name="home" size={20} color="#808080" />
-                            home
+                            <Text>home</Text> 
                         </View>
                     </TouchableOpacity>
 
@@ -45,7 +43,7 @@ function NaviTab({ navigation }) {
                                 size={20}
                                 color="#808080"
                             />
-                            home
+                            <Text>Compl</Text>
                         </View>
                     </TouchableOpacity>
 
@@ -58,7 +56,7 @@ function NaviTab({ navigation }) {
                                 size={20}
                                 color="#808080"
                             />
-                            home
+                            <Text>Rate</Text>
                         </View>
                     </TouchableOpacity>
 
@@ -67,7 +65,7 @@ function NaviTab({ navigation }) {
                     >
                         <View style={{ alignItems: "center" }}>
                             <Ionicons name="star" size={20} color="#808080" />
-                            home
+                            <Text>Rate</Text>
                         </View>
                     </TouchableOpacity>
                 </View>
@@ -80,16 +78,20 @@ function HomePage({ navigation }) {
     return <MainPage2 />;
 }
 
-function ComplaintPage() {
+export function ComplaintPage() {
     return <Complaints />;
 }
 
-function RatingPage() {
+export function RatingPage() {
     return <Rating />;
 }
 
 function SettingPage() {
     return <MviewApp />;
+}
+
+export function CustComplaintPage(){
+    return <CustomerComplaint/>
 }
 
 const Stack = createStackNavigator();
@@ -99,27 +101,27 @@ function Navigation() {
         <NavigationContainer>
             <Stack.Navigator initialRouteName={["Home Page", "Navi Tab"]}>
                 <Stack.Screen
-                    options={{ headerShown: true }}
+                    options={{ headerShown: false }}
                     name="Navi Tab"
                     component={NaviTab}
                 />
                 <Stack.Screen
-                    options={{ headerShown: true }}
+                    options={{ headerShown: false }}
                     name="Home Page"
                     component={HomePage}
                 />
                 <Stack.Screen
-                    options={{ headerShown: true }}
+                    options={{ headerShown: false }}
                     name="Complaint Page"
                     component={ComplaintPage}
                 />
                 <Stack.Screen
-                    options={{ headerShown: true }}
+                    options={{ headerShown: false }}
                     name="Rating Page"
                     component={RatingPage}
                 />
                 <Stack.Screen
-                    options={{ headerShown: true }}
+                    options={{ headerShown: false }}
                     name="Settings Page"
                     component={SettingPage}
                 />
@@ -137,7 +139,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff",
         bottom: 0,
         padding: 5,
-        position: "fixed",
+        // position: "fixed",
         shadowColor: "rgba(0, 0, 0, .3)",
         shadowOffset: { width: 0, height: -1 },
         shadowOpacity: 0.4,
