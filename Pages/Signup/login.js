@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
     StyleSheet,
     Text,
@@ -12,10 +12,30 @@ import {
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import SignUpPage from "./signup";
+import { auth } from "../../firebase";
 
-export function LoginPage({ navigation }) {
-    const [textName, setTextName] = React.useState(null);
+export default function LoginPage({navigation}) {
     const [textMail, setTextMail] = React.useState(null);
+    const [textPass, setTextPass] = React.useState(null);
+
+    const handleLogin = () => {
+        auth.signInWithEmailAndPassword(textMail, textPass)
+            .then((userCredentials) => {
+                const user = userCredentials.user;
+                console.log("User successfuly logged in as : ", user.textMail);
+            })
+            .catch((error) => alert('Wrong credentials'));
+    };
+
+    useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged((user) => {
+            if (user) {
+                navigation.navigate("Navi Tab");
+            }
+        });
+
+        return unsubscribe;
+    }, []);
 
     return (
         <View style={styles.container}>
@@ -39,42 +59,42 @@ export function LoginPage({ navigation }) {
                 </View>
 
                 <View style={styles.titlePge}>
-                    <Text style={{ color: '#666666', fontSize: 18, fontWeight: 'bold'}}>Login</Text>
+                    <Text
+                        style={{
+                            color: "#666666",
+                            fontSize: 18,
+                            fontWeight: "bold",
+                        }}
+                    >
+                        Login
+                    </Text>
                 </View>
 
                 <View style={styles.loginFrm}>
                     {/* <View style={styles.loginDetails}> */}
                     <TextInput
                         style={styles.loginDetails}
-                        onChangeText={setTextName}
-                        placeholder="Username"
-                        value={textName}
+                        onChangeText={setTextMail}
+                        placeholder="Username email"
+                        value={textMail}
                     />
                     {/* </View> */}
 
                     {/* <View style={styles.loginDetails}> */}
                     <TextInput
                         style={styles.loginDetails}
-                        onChangeText={setTextMail}
-                        placeholder="email"
-                        value={textMail}
+                        onChangeText={setTextPass}
+                        placeholder="Password"
+                        value={textPass}
                     />
                     {/* </View> */}
                 </View>
 
-                <TouchableOpacity
-                    onPress={() =>
-                        alert(
-                            "User has logged in \n" +
-                                "Name : " +
-                                textName +
-                                "\nEmail : " +
-                                textMail
-                        )
-                    }
-                >
+                <TouchableOpacity onPress={handleLogin}>
                     <View style={styles.loginBtn}>
-                        <Text style={{ color: "#fff", fontWeight: 'bold'}}>Login button</Text>
+                        <Text style={{ color: "#fff", fontWeight: "bold" }}>
+                            Login
+                        </Text>
                     </View>
                 </TouchableOpacity>
 
@@ -88,7 +108,15 @@ export function LoginPage({ navigation }) {
                     onPress={() => navigation.navigate("Sign Up")}
                 >
                     <View style={styles.signupBtn}>
-                        <Text style={{ color: "#000", fontWeight: 'bold', fontSize: 15}}>New User</Text>
+                        <Text
+                            style={{
+                                color: "#000",
+                                fontWeight: "bold",
+                                fontSize: 15,
+                            }}
+                        >
+                            New User
+                        </Text>
                     </View>
                 </TouchableOpacity>
             </View>
@@ -96,30 +124,39 @@ export function LoginPage({ navigation }) {
     );
 }
 
-function SignUpNav() {
+export function SignUpNav() {
     return <SignUpPage />;
 }
 
+// function HomeAppNav() {
+//     return <Navigation />;
+// }
+
 const Stack = createStackNavigator();
 
-export default function LoginNav() {
-    return (
-        // <NavigationContainer>
-        <Stack.Navigator initialRouteName={"Login Page"}>
-            <Stack.Screen
-                options={{ headerShown: false }}
-                name="Login Page"
-                component={LoginPage}
-            />
-            <Stack.Screen
-                options={{ headerShown: false }}
-                name="Sign Up"
-                component={SignUpNav}
-            />
-        </Stack.Navigator>
-        // </NavigationContainer>
-    );
-}
+// export default function LoginNav() {
+//     return (
+//         // <NavigationContainer>
+//             <Stack.Navigator initialRouteName={"Login Page"}>
+//                 <Stack.Screen
+//                     options={{ headerShown: false }}
+//                     name="Login Page"
+//                     component={LoginPage}
+//                 />
+//                 <Stack.Screen
+//                     options={{ headerShown: false }}
+//                     name="Sign Up"
+//                     component={SignUpNav}
+//                 />
+//                 {/* <Stack.Screen
+//                     options={{ headerShown: false }}
+//                     name="Home App Nav"
+//                     component={Navigation}
+//                 /> */}
+//             </Stack.Navigator>
+//         // </NavigationContainer>
+//     );
+// }
 
 const styles = StyleSheet.create({
     container: {
@@ -133,7 +170,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "center",
         alignItems: "center",
-        alignSelf: 'flex-start',
+        alignSelf: "flex-start",
         marginTop: 50,
         marginLeft: 20,
         marginBottom: 50,
@@ -146,7 +183,7 @@ const styles = StyleSheet.create({
     titlePge: {
         justifyContent: "center",
         alignItems: "center",
-        marginTop: 100
+        marginTop: 100,
     },
     loginFrm: {
         width: "80%",

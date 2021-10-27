@@ -1,25 +1,18 @@
 import React from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
 import MainPage2 from "../Pages/WelcomeMain/Main2";
 import Complaints from "../Pages/Complaints";
 import CustomerComplaint from "../Pages/Complaints/Customer/complaints";
 import Rating from "../Pages/Rating";
 import MviewApp from "../Pages/WelcomeMain/Mview";
-import LoginNav from "../Pages/Signup/login";
-// import { NativeRouter, Route, Link} from '@types/react-router-native';
 
 
+export function NaviTab({ navigation}) {
 
-
-
-function NaviTab({ navigation }) {
     return (
         <>
-            <LoginNav/>
-            {/* <MainPage2 /> */}
+            <MainPage2 />
 
             
             <View style={styles.navcontainer}>
@@ -74,7 +67,7 @@ function NaviTab({ navigation }) {
     );
 }
 
-function HomePage({ navigation }) {
+export function HomePage({ navigation }) {
     return <MainPage2 />;
 }
 
@@ -86,51 +79,13 @@ export function RatingPage() {
     return <Rating />;
 }
 
-function SettingPage() {
+export function SettingPage() {
     return <MviewApp />;
 }
 
 export function CustComplaintPage(){
     return <CustomerComplaint/>
 }
-
-const Stack = createStackNavigator();
-
-function Navigation() {
-    return (
-        <NavigationContainer>
-            <Stack.Navigator initialRouteName={["Home Page", "Navi Tab"]}>
-                <Stack.Screen
-                    options={{ headerShown: false }}
-                    name="Navi Tab"
-                    component={NaviTab}
-                />
-                <Stack.Screen
-                    options={{ headerShown: false }}
-                    name="Home Page"
-                    component={HomePage}
-                />
-                <Stack.Screen
-                    options={{ headerShown: false }}
-                    name="Complaint Page"
-                    component={ComplaintPage}
-                />
-                <Stack.Screen
-                    options={{ headerShown: false }}
-                    name="Rating Page"
-                    component={RatingPage}
-                />
-                <Stack.Screen
-                    options={{ headerShown: false }}
-                    name="Settings Page"
-                    component={SettingPage}
-                />
-            </Stack.Navigator>
-        </NavigationContainer>
-    );
-}
-
-export default Navigation;
 
 const styles = StyleSheet.create({
     navcontainer: {

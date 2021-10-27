@@ -10,11 +10,22 @@ import {
     Alert,
 } from "react-native";
 import LoginPage from "./login";
+import { auth } from "../../firebase";
 
 export default function SignUpPage({ navigation }) {
     const [textName, setTextName] = React.useState(null);
     const [textMail, setTextMail] = React.useState(null);
     const [textPass, setTextPass] = React.useState(null);
+
+    const handleSignUp = () => {
+        auth
+            .createUserWithEmailAndPassword(textMail, textPass)
+            .then((userCredentials) => {
+                const user = userCredentials.user;
+                console.log('User successfuly registered as : ',user.textMail);
+            })
+            .catch((error) => alert('Failed to register'));
+    };
 
     const signupAlert = () =>
         Alert.alert("Sign Up", "New User Sign Up in progress", [
@@ -43,6 +54,7 @@ export default function SignUpPage({ navigation }) {
             },
         ]);
 
+        
     return (
         <View style={styles.container}>
             <StatusBar style="auto" />
@@ -69,13 +81,13 @@ export default function SignUpPage({ navigation }) {
                 </View>
 
                 <View style={styles.loginFrm}>
-                    <View style={styles.loginDetails}>
+                    {/* <View style={styles.loginDetails}>
                         <TextInput
                             onChangeText={setTextName}
                             placeholder="Username"
                             value={textName}
                         />
-                    </View>
+                    </View> */}
 
                     <View style={styles.loginDetails}>
                         <TextInput
@@ -95,7 +107,7 @@ export default function SignUpPage({ navigation }) {
                 </View>
 
                 <View style={styles.loginBtn}>
-                    <TouchableOpacity onPress={signupAlert}>
+                    <TouchableOpacity onPress={handleSignUp}>
                         <Text style={{ color: "#fff", fontWeight: "bold" }}>
                             Register
                         </Text>
