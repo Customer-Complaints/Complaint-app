@@ -1,73 +1,232 @@
-import * as React from 'react';
-import { SafeAreaView, StyleSheet, Text, TextInput, View, TouchableOpacity, Image} from 'react-native';
-
+import * as React from "react";
+import {
+    SafeAreaView,
+    StyleSheet,
+    Text,
+    TextInput,
+    View,
+    TouchableOpacity,
+    Image,
+} from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { firestore } from "../../firebase";
 
 const colors = {
-    orange: '#ffba5a',
-    grey: '#a9a9a9'
+    orange: "#ffba5a",
+    grey: "#a9a9a9",
 };
 
-export default function Rating(){
+export default function Rating() {
+    
+    const [userNme, setUserNme] = React.useState();
+    const [retailNme, setRetailNme] = React.useState();
+    const [textSubject, setTextSubject] = React.useState();
+    const [complaintIn, setComplaintIn] = React.useState();
 
-    const [ retailNme, setRetailNme ] = React.useState();
-    const [ complaintIn, setComplaintIn ] = React.useState();
+    const [defaultRating, setDefaultRating] = React.useState(0);
+    const [maxRating, setMaxRating] = React.useState([1, 2, 3, 4, 5]);
 
-    const [ defaultRating, setDefaultRating ] = React.useState(0);
-    const [ maxRating, setMaxRating ] = React.useState([1,2,3,4,5]);
-
-    const starImgFilled = 'https://raw.githubusercontent.com/tranhonghan/images/main/star_filled.png';
-    const starImgCorner= 'https://raw.githubusercontent.com/tranhonghan/images/main/star_corner.png';
+    const starImgFilled =
+        "https://raw.githubusercontent.com/tranhonghan/images/main/star_filled.png";
+    const starImgCorner =
+        "https://raw.githubusercontent.com/tranhonghan/images/main/star_corner.png";
 
     const CustomRatingBar = () => {
         return (
             <View style={styles.customRatingBarStyle}>
-                {
-                    maxRating.map((item, key) => {
-                        return(
-                            <TouchableOpacity
-                                activeOpacity = {0.7}
-                                key = {item}
-                                onPress={() => setDefaultRating(item)}
-                            >
-                                <Image
-                                    style = {styles.starImgStyle}
-                                    source={
-                                        item <= defaultRating
-                                        ? {uri: starImgFilled}
-                                        : {uri: starImgCorner}
-                                    }
-                                />
-                            </TouchableOpacity>
-                        )
-                    })
-                }
+                {maxRating.map((item, key) => {
+                    return (
+                        <TouchableOpacity
+                            activeOpacity={0.7}
+                            key={item}
+                            onPress={() => setDefaultRating(item)}
+                        >
+                            <Image
+                                style={styles.starImgStyle}
+                                source={
+                                    item <= defaultRating
+                                        ? { uri: starImgFilled }
+                                        : { uri: starImgCorner }
+                                }
+                            />
+                        </TouchableOpacity>
+                    );
+                })}
             </View>
         );
-    }
-    
-    const ratingFdback = defaultRating + '/' + maxRating.length;
+    };
 
-    return(
+    const ratingFdback = defaultRating + "/" + maxRating.length;
+
+    const fDB_LOCATION = 'complaints';
+
+    const toFireDB = ()=>{
+        firestore
+            .collection(fDB_LOCATION)
+            .add({
+                name: userNme,
+                retailName: retailNme,
+                stars: ratingFdback,
+                complaintMsg: textSubject
+            })
+            .then(() =>{
+                console.log('Complaint Sent'),
+                alert('Complaint Sent')
+            })
+    }
+
+    return (
         <SafeAreaView style={styles.container}>
-            <View>
+            <View
+                style={{
+                    justifyContent: "center",
+                    alignItems: "center",
+                    width: "80%",
+                    height: "100%",
+                }}
+            >
                 <Text>Customer Complaint Ratings</Text>
-                <TextInput
-                    onChangeText = {setRetailNme}
-                    value={retailNme}
-                    placeholder='Retail Name' 
-                />
-                <CustomRatingBar/>
-                <Text>{ratingFdback}</Text>
-                <TouchableOpacity
-                    activeOpacity ={0.7}
-                    style={styles.buttonStyle}
-                    onPress={() => alert('Review Sent \nReview Info :- \nComplaint : ' + retailNme + '\nStars : ' + ratingFdback)}
-                >
-                    <Text>send</Text>
-                    {
-                        console.log('Stars : ' + defaultRating + '\nRetail' + retailNme)
-                    }
-                </TouchableOpacity>
+
+                <View style={{ width: "100%", alignSelf: "flex-start" }}>
+                    <View
+                        style={{
+                            width: "100%",
+                            height: 50,
+                            justifyContent: "center",
+                            alignSelf: "flex-start",
+                            borderWidth: 2,
+                            borderRadius: 5,
+                            borderColor: "rgba(160, 160, 160, 1)",
+                            paddingHorizontal: 10,
+                        }}
+                    >
+                        <TextInput
+                            style={{
+                                color: "rgba(50, 50, 50, 1)",
+                                fontSize: 18,
+                                fontWeight: "700",
+                            }}
+                            onChangeText={setUserNme}
+                            value={userNme}
+                            placeholder="Name"
+                        />
+                    </View>
+
+                    <View
+                        style={{
+                            width: "100%",
+                            height: 50,
+                            justifyContent: "center",
+                            alignSelf: "flex-start",
+                            borderWidth: 2,
+                            borderRadius: 5,
+                            borderColor: "rgba(160, 160, 160, 1)",
+                            paddingHorizontal: 10,
+                            marginTop: 10
+                        }}
+                    >
+                        <TextInput
+                            style={{
+                                color: "rgba(50, 50, 50, 1)",
+                                fontSize: 18,
+                                fontWeight: "700",
+                            }}
+                            onChangeText={setRetailNme}
+                            value={retailNme}
+                            placeholder="Retail Name"
+                        />
+                    </View>
+
+                    <View
+                        style={{
+                            width: "100%",
+                            height: "40%",
+                            borderWidth: 2,
+                            borderRadius: 5,
+                            borderColor: "rgba(160, 160, 160, 1)",
+                            padding: 10,
+                            marginTop: 10
+                        }}
+                    >
+                        <TextInput
+                            style={{ color: "rgba(50, 50, 50, 1)" }}
+                            onChangeText={setTextSubject}
+                            placeholder="Subject"
+                            value={textSubject}
+                            maxLength={180}
+                            multiline
+                        />
+                    </View>
+
+                    <View
+                        style={{
+                            flexDirection: "row",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            marginTop: 20,
+                            marginBottom: 20
+                        }}
+                    >
+                        <View style={{ alignSelf: "flex-start" }}>
+                            <CustomRatingBar />
+                        </View>
+
+                        <View style={{fontSize: 20}}>
+                            <Text style={{fontSize: 20, fontWeight: "bold", color: "rgba(100, 100, 100, 1)"}}>{ratingFdback}</Text>
+                        </View>
+                    </View>
+
+                    <View style={{}}>
+                        <TouchableOpacity
+                            activeOpacity={0.7}
+                            // style={styles.buttonStyle}
+                            style={{
+                                justifyContent: "center",
+                                alignContent: "center",
+                                alignSelf: "flex-start",
+                                marginTop: 20,
+                            }}
+                            onPress={toFireDB}
+                        >
+                            <View
+                                style={{
+                                    flexDirection: "row",
+                                    alignItems: "center",
+                                    width: "35%",
+                                    height: 50,
+                                    backgroundColor: "cyan",
+                                    borderRadius: 5,
+                                    bottom: 0,
+                                    padding: 10,
+                                }}
+                            >
+                                <Text
+                                    style={{
+                                        color: "#fff",
+                                        fontSize: 20,
+                                        fontWeight: "bold",
+                                        textAlign: "center",
+                                    }}
+                                >
+                                    Send
+                                </Text>
+
+                                <Ionicons
+                                    name="send"
+                                    size={30}
+                                    color="#fff"
+                                    style={{ paddingLeft: 10 }}
+                                />
+                            </View>
+                            {console.log(
+                                "Stars : " +
+                                    defaultRating +
+                                    "\nRetail" +
+                                    retailNme
+                            )}
+                        </TouchableOpacity>
+                    </View>
+                </View>
             </View>
         </SafeAreaView>
     );
@@ -76,25 +235,38 @@ export default function Rating(){
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100%",
+        width: "100%",
     },
-    customRatingBarStyle:{
-        justifyContent: 'center',
-        flexDirection: 'row',
-        marginTop: 30
+    customRatingBarStyle: {
+        justifyContent: "center",
+        flexDirection: "row",
+        // marginTop: 30,
     },
-    starImgStyle:{
+    starImgStyle: {
         width: 40,
         height: 40,
-        resizeMode: 'cover'
+        resizeMode: "cover",
     },
     buttonStyle: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: 30,
-        padding: 15,
-        backgroundColor: 'red',
-        borderRadius: 5
-    }
-})
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+        width: "35%",
+        height: "10%",
+        backgroundColor: "cyan",
+        borderRadius: 5,
+        bottom: "45%",
+    },
+    // loginDetails: {
+    //     width: 300,
+    //     height: 200,
+    //     borderWidth: 2,
+    //     borderRadius: 5,
+    //     borderColor: "rgba(160, 160, 160, 1)",
+    //     marginTop: 5,
+    //     padding: 10
+    // }
+});

@@ -1,8 +1,36 @@
 import * as React from "react";
-import { SafeAreaView, StyleSheet, ScrollView, Text, View, Image} from "react-native";
-import { complaintData } from "../Components/Complaints/complaintData";
+import {
+    SafeAreaView,
+    StyleSheet,
+    ScrollView,
+    TouchableOpacity,
+    Text,
+    View,
+    Image,
+} from "react-native";
+import { firestore } from "../../firebase";
+
+const fDB_LOCATION = "complaints";
 
 export default function Complaints() {
+    const [users, setUsers] = React.useState([]);
+
+    React.useEffect(() => {
+        firestore.collection("complaints").onSnapshot((querySnapshot) => {
+            const users = [];
+            querySnapshot.docs.forEach((doc) => {
+                const { name, retailName, stars, complaintMsg } = doc.data();
+                users.push({
+                    name,
+                    retailName,
+                    stars,
+                    complaintMsg
+                });
+            });
+            setUsers(users);
+        });
+    }, []);
+
     return (
         <SafeAreaView style={styles.container}>
             <View
@@ -21,35 +49,47 @@ export default function Complaints() {
                     <Text style={{ fontSize: 20, fontWeight: "bold" }}>
                         Voice Out App
                     </Text>
+
+                    <TouchableOpacity
+                        onPress={() => alert("fetchedComplaints")}
+                        style={{ backgroundColor: "red" }}
+                    >
+                        <Text>Data</Text>
+                    </TouchableOpacity>
                 </View>
 
                 <ScrollView>
-                    {complaintData.map((item, index) => (
-                        <View style={styles.complaintCard}>
-                            <View style={styles.row1}>
-                                <Text style={styles.textName}>
-                                    {item.cName}
-                                </Text>
-                                <Text style={{ color: "orange" }}>
-                                    {/* <CustomRatingStars/> */}
-                                    {item.ratings}
-                                </Text>
-                            </View>
+                    {users.map((user) => {
+                        return (
+                            <View style={styles.complaintCard}>
+                                <View style={styles.row1}>
+                                    <Text style={styles.textName}>
+                                        {user.name}
+                                    </Text>
+                                    <Text style={{ color: "orange" }}>
+                                        {user.stars}
+                                    </Text>
+                                </View>
 
-                            <View style={styles.row2}>
-                                <Text style={styles.textName}>
-                                    {item.retailName} -{" "}
-                                </Text>
-                                <Text style={{ color: "rgba(0, 100, 255, 1)" }}>
-                                    Department
-                                </Text>
-                            </View>
+                                <View style={styles.row2}>
+                                    <Text style={styles.textName}>
+                                        {user.retailName} -{" "}
+                                    </Text>
+                                    <Text
+                                        style={{
+                                            color: "rgba(0, 100, 255, 1)",
+                                        }}
+                                    >
+                                        Department
+                                    </Text>
+                                </View>
 
-                            <View style={styles.row3}>
-                                <Text>{item.compMsg}</Text>
+                                <View style={styles.row3}>
+                                    <Text>{user.complaintMsg}</Text>
+                                </View>
                             </View>
-                        </View>
-                    ))}
+                        );
+                    })}
                 </ScrollView>
             </View>
         </SafeAreaView>

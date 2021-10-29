@@ -1,8 +1,9 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { StyleSheet, Picker, Text, TextInput, View, Image } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 
-import PickerComp from '../../Components/Complaints/pickerComponet';
+import PickerComp from "../../Components/Complaints/pickerComponet";
 
 export default function CustomerComplaint() {
     const [textSubject, setTextSubject] = React.useState();
@@ -29,12 +30,26 @@ export default function CustomerComplaint() {
                     </Text>
                 </View>
 
-                <View style={{justifyContent: "center", alignItems: "center", width: "85%", height:'10%', backgroundColor:'purple'}}>
+                <View
+                    style={{
+                        justifyContent: "center",
+                        alignItems: "center",
+                        width: "85%",
+                        height: "10%",
+                        backgroundColor: "purple",
+                    }}
+                >
                     <Text>Select Service Provider (Dropdown)</Text>
-                    <PickerComp/>
+                    {/* <PickerComp/> */}
                 </View>
 
-                <View style={{justifyContent: "center", width: "85%", height:'10%', backgroundColor:'blue'}}>
+                <View
+                    style={{
+                        justifyContent: "center",
+                        width: "85%",
+                        height: "10%",
+                    }}
+                >
                     <View style={styles.loginDetails}>
                         <TextInput
                             onChangeText={setTextSubject}
@@ -44,9 +59,15 @@ export default function CustomerComplaint() {
                     </View>
                 </View>
 
-                <View style={{justifyContent: "center", width: "85%", height:'25%', backgroundColor:'red'}}>
+                <View
+                    style={{
+                        justifyContent: "center",
+                        width: "85%",
+                        height: "25%",
+                    }}
+                >
                     {/* <Text>Complaint</Text> */}
-                    <View style={[styles.loginDetails,{height: '90%'}]}>
+                    <View style={[styles.loginDetails, { height: "90%" }]}>
                         <TextInput
                             onChangeText={setTextComplaint}
                             placeholder="Complaint"
@@ -57,10 +78,32 @@ export default function CustomerComplaint() {
                         />
                     </View>
                 </View>
+            </View>
 
-                <View style={{justifyContent: "center", alignItems: "center", width: "85%", height:'5%', backgroundColor:'green'}}>
-                    <Text>Send</Text>
-                </View>
+            
+            <View
+                style={{
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    width: "35%",
+                    height: "7%",
+                    backgroundColor: "cyan",
+                    borderRadius: 5,
+                    bottom: "45%",
+                }}
+            >
+                <Text
+                    style={{ color: "#fff", fontSize: 20, fontWeight: "bold" }}
+                >
+                    Send
+                </Text>
+                <Ionicons
+                    name="send"
+                    size={30}
+                    color="#fff"
+                    style={{ paddingLeft: 10 }}
+                />
             </View>
         </View>
     );
@@ -71,6 +114,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
+        height: "100%",
     },
     headerName: {
         flexDirection: "row",

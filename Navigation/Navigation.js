@@ -6,6 +6,7 @@ import Complaints from "../Pages/Complaints";
 import CustomerComplaint from "../Pages/Complaints/Customer/complaints";
 import Rating from "../Pages/Rating";
 import MviewApp from "../Pages/WelcomeMain/Mview";
+import PickerComp from "../Pages/Components/Complaints/pickerComponet";
 
 
 export function NaviTab({ navigation}) {
@@ -80,7 +81,7 @@ export function RatingPage() {
 }
 
 export function SettingPage() {
-    return <MviewApp />;
+    return <PickerComp/>;
 }
 
 export function CustComplaintPage(){

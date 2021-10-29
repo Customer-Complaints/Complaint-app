@@ -10,6 +10,7 @@ import {
     NaviTab,
     HomePage,
     ComplaintPage,
+    CustComplaintPage,
     RatingPage,
     SettingPage,
 } from "./Navigation/Navigation";
@@ -19,7 +20,7 @@ const Stack = createStackNavigator();
 export default function App() {
     return (
         <NavigationContainer>
-            <Stack.Navigator initialRouteName={["Navi Tab"]}>
+            <Stack.Navigator initialRouteName={"Login Page"}>
                 <Stack.Screen
                     options={{ headerShown: false }}
                     name="Login Page"
@@ -58,7 +59,7 @@ export default function App() {
                 <Stack.Screen
                     options={{ headerShown: false }}
                     name="Settings Page"
-                    component={SettingPage}
+                    component={CustComplaintPage}
                 />
             </Stack.Navigator>
         </NavigationContainer>

@@ -30,7 +30,7 @@ export default function LoginPage({navigation}) {
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((user) => {
             if (user) {
-                navigation.navigate("Navi Tab");
+                navigation.push("Navi Tab");
             }
         });
 
