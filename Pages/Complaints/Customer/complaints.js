@@ -1,17 +1,40 @@
-import { StatusBar } from "expo-status-bar";
-import React from "react";
-import { StyleSheet, Picker, Text, TextInput, View, Image } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import * as React from "react";
+import {
+    SafeAreaView,
+    StyleSheet,
+    ScrollView,
+    TouchableOpacity,
+    Text,
+    View,
+    Image,
+} from "react-native";
+import { firestore } from "../../../firebase";
+import AdminResponse from "./Admin/Components/AdminReply";
 
-import PickerComp from "../../Components/Complaints/pickerComponet";
+const fDB_LOCATION = "complaints";
 
 export default function CustomerComplaint() {
-    const [textSubject, setTextSubject] = React.useState();
-    const [textComplaint, setTextComplaint] = React.useState();
+    const [users, setUsers] = React.useState([]);
+
+    React.useEffect(() => {
+        firestore.collection("complaints").onSnapshot((querySnapshot) => {
+            const users = [];
+
+            querySnapshot.docs.forEach((doc) => {
+                const { name, retailName, stars, complaintMsg } = doc.data();
+                users.push({
+                    name,
+                    retailName,
+                    stars,
+                    complaintMsg,
+                });
+            });
+            setUsers(users);
+        });
+    }, []);
 
     return (
-        <View style={styles.container}>
-            <StatusBar style="auto" />
+        <SafeAreaView style={styles.container}>
             <View
                 style={{
                     justifyContent: "flex-start",
@@ -30,91 +53,71 @@ export default function CustomerComplaint() {
                     </Text>
                 </View>
 
-                <View
-                    style={{
-                        justifyContent: "center",
-                        alignItems: "center",
-                        width: "85%",
-                        height: "10%",
-                        backgroundColor: "purple",
-                    }}
+                <ScrollView
+                    showsVerticalScrollIndicator={true}
+                    style={{ width: "90%", height: "100%" }}
                 >
-                    <Text>Select Service Provider (Dropdown)</Text>
-                    {/* <PickerComp/> */}
-                </View>
+                    {users.map((user) => {
+                        return (
+                            <View style={styles.complaintCard}>
+                                <View style={styles.row1}>
+                                    <Text style={styles.textName}>
+                                        {user.name}
+                                    </Text>
+                                    <Text style={styles.textName}>
+                                        Rating :{" "}
+                                        <Text style={{ color: "orange" }}>
+                                            {user.stars}
+                                        </Text>
+                                    </Text>
+                                </View>
 
-                <View
-                    style={{
-                        justifyContent: "center",
-                        width: "85%",
-                        height: "10%",
-                    }}
-                >
-                    <View style={styles.loginDetails}>
-                        <TextInput
-                            onChangeText={setTextSubject}
-                            placeholder="Subject"
-                            value={textSubject}
-                        />
-                    </View>
-                </View>
+                                <View style={styles.row2}>
+                                    <Text style={styles.textDepartment}>
+                                        {user.retailName} -{" "}
+                                    </Text>
+                                    <Text
+                                        style={{
+                                            color: "rgba(0, 100, 255, 1)",
+                                        }}
+                                    >
+                                        Department
+                                    </Text>
+                                </View>
 
-                <View
-                    style={{
-                        justifyContent: "center",
-                        width: "85%",
-                        height: "25%",
-                    }}
-                >
-                    {/* <Text>Complaint</Text> */}
-                    <View style={[styles.loginDetails, { height: "90%" }]}>
-                        <TextInput
-                            onChangeText={setTextComplaint}
-                            placeholder="Complaint"
-                            value={textComplaint}
-                            multiline
-                            maxLength={180}
-                            numberOfLines={5}
-                        />
-                    </View>
-                </View>
+                                <View style={styles.row3}>
+                                    <Text >
+                                        {user.complaintMsg}
+                                    </Text>
+                                </View>
+
+                                {/* <TouchableOpacity
+                                        onPress={()=><AdminResponse/>}
+                                        style={styles.replyBtn}
+                                    >
+                                <View style={styles.row4}>
+                                        <Text style={{color: '#fff', textAlign: 'center', fontWeight: "bold", fontSize: 15}}>Respond</Text>
+                                </View>
+                                </TouchableOpacity> */}
+
+                                <AdminResponse/>
+                            </View>
+                        );
+                    })}
+                </ScrollView>
             </View>
-
-            
-            <View
-                style={{
-                    flexDirection: "row",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    width: "35%",
-                    height: "7%",
-                    backgroundColor: "cyan",
-                    borderRadius: 5,
-                    bottom: "45%",
-                }}
-            >
-                <Text
-                    style={{ color: "#fff", fontSize: 20, fontWeight: "bold" }}
-                >
-                    Send
-                </Text>
-                <Ionicons
-                    name="send"
-                    size={30}
-                    color="#fff"
-                    style={{ paddingLeft: 10 }}
-                />
-            </View>
-        </View>
+        </SafeAreaView>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        width: "100%",
+        height: "50%",
         justifyContent: "center",
         alignItems: "center",
-        height: "100%",
+        backgroundColor: "#fff",
     },
     headerName: {
         flexDirection: "row",
@@ -130,13 +133,57 @@ const styles = StyleSheet.create({
         width: 60,
         marginRight: 5,
     },
-    loginDetails: {
-        width: "100%",
-        height: 50,
-        borderWidth: 2,
-        borderRadius: 5,
-        borderColor: "rgba(160, 160, 160, 1)",
-        marginTop: 5,
+    complaintCard: {
+        backgroundColor: "#fff",
         padding: 10,
+        marginBottom: 10,
+        borderRadius: 5,
+        shadowColor: "rgba(0, 0, 0, 1)",
+        shadowOffset: { width: 0, height: 5 },
+        shadowOpacity: 0.5,
+        shadowRadius: 3,
+        marginVertical: 5,
+    },
+    row1: {
+        justifyContent: "center",
+        paddingTop: 5,
+    },
+    row2: {
+        flexDirection: "row",
+        paddingTop: 5,
+    },
+    row3: {
+        paddingTop: 5,
+    },
+    // row4: {
+    //     width: '30%',
+    //     marginTop: 5,
+    //     padding: 5,
+    //     backgroundColor: 'rgba(0, 100, 255, .5)'
+    // },
+    replyBtn: {
+        width: '30%',
+        marginTop: 5,
+        padding: 7,
+        borderRadius: 5,
+        backgroundColor:'rgba(0, 100, 255, 1)'
+    },
+    textName: {
+        color: "#333333",
+        fontWeight: "bold",
+    },
+    textDepartment: {
+        color: "rgba(0, 100, 255, 1)",
+        fontWeight: "bold",
+    },
+    customRatingBarStyle: {
+        justifyContent: "center",
+        flexDirection: "row",
+        // marginTop: 30,
+    },
+    starImgStyle: {
+        width: 40,
+        height: 40,
+        resizeMode: "cover",
     },
 });

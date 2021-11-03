@@ -17,11 +17,11 @@ const colors = {
 };
 
 export default function Rating() {
-    
     const [userNme, setUserNme] = React.useState();
     const [retailNme, setRetailNme] = React.useState();
     const [textSubject, setTextSubject] = React.useState();
     const [complaintIn, setComplaintIn] = React.useState();
+    const [textResponse, setTextResponse] = React.useState("");
 
     const [defaultRating, setDefaultRating] = React.useState(0);
     const [maxRating, setMaxRating] = React.useState([1, 2, 3, 4, 5]);
@@ -56,24 +56,23 @@ export default function Rating() {
         );
     };
 
-    const ratingFdback = defaultRating + "/" + maxRating.length;
+    const ratingFdback = defaultRating; 
 
-    const fDB_LOCATION = 'complaints';
+    const fDB_LOCATION = "complaints";
 
-    const toFireDB = ()=>{
+    const toFireDB = () => {
         firestore
             .collection(fDB_LOCATION)
-            .add({
+            .set({
                 name: userNme,
                 retailName: retailNme,
-                stars: ratingFdback,
+                stars: defaultRating,
                 complaintMsg: textSubject
             })
-            .then(() =>{
-                console.log('Complaint Sent'),
-                alert('Complaint Sent')
-            })
-    }
+            .then(() => {
+                console.log("Complaint Sent"), alert("Complaint Sent");
+            });
+    };
 
     return (
         <SafeAreaView style={styles.container}>
@@ -81,13 +80,23 @@ export default function Rating() {
                 style={{
                     justifyContent: "center",
                     alignItems: "center",
-                    width: "80%",
+                    width: "100%",
                     height: "100%",
                 }}
             >
+                <View style={styles.headerName}>
+                    <Image
+                        style={styles.hdLogo}
+                        source={require("../../assets/voice_logo.jpg")}
+                    />
+                    <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+                        Voice Out App
+                    </Text>
+                </View>
+
                 <Text>Customer Complaint Ratings</Text>
 
-                <View style={{ width: "100%", alignSelf: "flex-start" }}>
+                <View style={{ width: "80%" }}>
                     <View
                         style={{
                             width: "100%",
@@ -122,7 +131,7 @@ export default function Rating() {
                             borderRadius: 5,
                             borderColor: "rgba(160, 160, 160, 1)",
                             paddingHorizontal: 10,
-                            marginTop: 10
+                            marginTop: 10,
                         }}
                     >
                         <TextInput
@@ -145,7 +154,7 @@ export default function Rating() {
                             borderRadius: 5,
                             borderColor: "rgba(160, 160, 160, 1)",
                             padding: 10,
-                            marginTop: 10
+                            marginTop: 10,
                         }}
                     >
                         <TextInput
@@ -164,15 +173,23 @@ export default function Rating() {
                             justifyContent: "space-between",
                             alignItems: "center",
                             marginTop: 20,
-                            marginBottom: 20
+                            marginBottom: 20,
                         }}
                     >
                         <View style={{ alignSelf: "flex-start" }}>
                             <CustomRatingBar />
                         </View>
 
-                        <View style={{fontSize: 20}}>
-                            <Text style={{fontSize: 20, fontWeight: "bold", color: "rgba(100, 100, 100, 1)"}}>{ratingFdback}</Text>
+                        <View style={{ fontSize: 20 }}>
+                            <Text
+                                style={{
+                                    fontSize: 20,
+                                    fontWeight: "bold",
+                                    color: "rgba(100, 100, 100, 1)",
+                                }}
+                            >
+                                {ratingFdback}
+                            </Text>
                         </View>
                     </View>
 
@@ -239,6 +256,20 @@ const styles = StyleSheet.create({
         alignItems: "center",
         height: "100%",
         width: "100%",
+    },
+    headerName: {
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+        alignSelf: "flex-start",
+        marginTop: 50,
+        marginLeft: 20,
+        marginBottom: 50,
+    },
+    hdLogo: {
+        height: 60,
+        width: 60,
+        marginRight: 5,
     },
     customRatingBarStyle: {
         justifyContent: "center",

@@ -88,32 +88,47 @@ export function MainHomePage({ navigation }) {
                             </Text>
                         </View>
 
-                        <FlatGrid
-                            itemDimension={80}
-                            data={items}
-                            spacing={10}
-                            style={{ width: "100%" }}
-                            renderItem={({ item }) => (
-                                <View style={styles.itemContainer}>
-                                    <View style={styles.itemContainerItems}>
-                                        <Ionicons
-                                            name={item.icon}
-                                            size={50}
-                                            color="#808080"
-                                        />
-                                        <Text
-                                            style={{
-                                                textAlign: "center",
-                                                color: "#808080",
-                                                fontWeight: "bold",
-                                            }}
-                                        >
-                                            {item.name}
-                                        </Text>
-                                    </View>
-                                </View>
-                            )}
-                        />
+                        <View style={{width: "100%", justifyContent: 'center'}}>
+                            <FlatGrid
+                                itemDimension={90}
+                                data={items}
+                                spacing={5}
+                                renderItem={({ item }) => (
+                                    <TouchableOpacity
+                                        onPress={() =>
+                                            navigation.navigate("Rating Page") +
+                                            alert(
+                                                "Department selected is : " +
+                                                    item.name
+                                            )
+                                        }
+                                    >
+                                        <View style={styles.itemContainer}>
+                                            <View
+                                                style={
+                                                    styles.itemContainerItems
+                                                }
+                                            >
+                                                <Ionicons
+                                                    name={item.icon}
+                                                    size={50}
+                                                    color="#808080"
+                                                />
+                                                <Text
+                                                    style={{
+                                                        textAlign: "center",
+                                                        color: "#808080",
+                                                        fontWeight: "bold",
+                                                    }}
+                                                >
+                                                    {item.name}
+                                                </Text>
+                                            </View>
+                                        </View>
+                                    </TouchableOpacity>
+                                )}
+                            />
+                        </View>
                     </View>
                 </View>
             </SafeAreaView>
@@ -156,6 +171,8 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
+        height: '100%',
+        backgroundColor: '#fff'
     },
     headerName: {
         flexDirection: "row",
@@ -173,14 +190,16 @@ const styles = StyleSheet.create({
     },
     ccomplaints: {
         justifyContent: "center",
-        alignItems: "center",
+        alignItems: "flex-start",
         width: "85%",
+        height:'10%',
         borderRadius: 5,
         shadowColor: "rgba(0, 0, 0, .7)",
         shadowOffset: { width: -2, height: 5 },
         shadowOpacity: 0.5,
         shadowRadius: 3,
         marginVertical: 15,
+        // backgroundColor: 'blue'
     },
     ccomplaints_text: {
         alignSelf: "flex-start",
@@ -194,7 +213,9 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         width: "85%",
+        height:'60%',
         marginVertical: 15,
+        // backgroundColor: 'green'
     },
     servicesList: {
         flexDirection: "row",

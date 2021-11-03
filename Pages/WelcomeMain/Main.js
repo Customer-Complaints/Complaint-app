@@ -8,15 +8,6 @@ import {FlatGrid} from 'react-native-super-grid';
 
 export default function MainPage(){
 
-    const [items, setItems] = React.useState([
-        { name: 'TURQUOISE'},
-        { name: 'EMERALD'},
-        { name: 'PETER RIVER'},
-        { name: 'AMETHYST'},
-        { name: 'WET ASPHALT'},
-        { name: 'GREEN SEA'}
-    ]);
-
     const [reviews, setReviews] = React.useState([
         { name: 'John. A', retailNme: 'SupaTronix', complaint: 'Quality of goods is not on par. Definetely not satisfied.'},
         { name: 'Anold. A', retailNme: 'Trader Point', complaint: 'Definetely not satisfied.'},

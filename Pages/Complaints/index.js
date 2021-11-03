@@ -18,13 +18,15 @@ export default function Complaints() {
     React.useEffect(() => {
         firestore.collection("complaints").onSnapshot((querySnapshot) => {
             const users = [];
+
             querySnapshot.docs.forEach((doc) => {
-                const { name, retailName, stars, complaintMsg } = doc.data();
+                const { name, retailName, stars, complaintMsg, adminResponse } = doc.data();
                 users.push({
                     name,
                     retailName,
                     stars,
-                    complaintMsg
+                    complaintMsg,
+                    adminResponse
                 });
             });
             setUsers(users);
@@ -49,16 +51,12 @@ export default function Complaints() {
                     <Text style={{ fontSize: 20, fontWeight: "bold" }}>
                         Voice Out App
                     </Text>
-
-                    <TouchableOpacity
-                        onPress={() => alert("fetchedComplaints")}
-                        style={{ backgroundColor: "red" }}
-                    >
-                        <Text>Data</Text>
-                    </TouchableOpacity>
                 </View>
 
-                <ScrollView>
+                <ScrollView
+                    showsVerticalScrollIndicator={true}
+                    style={{ width: "90%", height: "100%" }}
+                >
                     {users.map((user) => {
                         return (
                             <View style={styles.complaintCard}>
@@ -66,13 +64,16 @@ export default function Complaints() {
                                     <Text style={styles.textName}>
                                         {user.name}
                                     </Text>
-                                    <Text style={{ color: "orange" }}>
-                                        {user.stars}
+                                    <Text style={styles.textName}>
+                                        Rating :{" "}
+                                        <Text style={{ color: "orange" }}>
+                                            {user.stars}
+                                        </Text>
                                     </Text>
                                 </View>
 
                                 <View style={styles.row2}>
-                                    <Text style={styles.textName}>
+                                    <Text style={styles.textDepartment}>
                                         {user.retailName} -{" "}
                                     </Text>
                                     <Text
@@ -85,7 +86,15 @@ export default function Complaints() {
                                 </View>
 
                                 <View style={styles.row3}>
-                                    <Text>{user.complaintMsg}</Text>
+                                    <Text >
+                                        {user.complaintMsg}
+                                    </Text>
+                                </View>
+
+                                <View style={styles.row4}>
+                                    <Text style={{ height: 50 }}>
+                                        {user.adminResponse}
+                                    </Text>
                                 </View>
                             </View>
                         );
@@ -103,6 +112,7 @@ const styles = StyleSheet.create({
         height: "50%",
         justifyContent: "center",
         alignItems: "center",
+        backgroundColor: "#fff",
     },
     headerName: {
         flexDirection: "row",
@@ -119,19 +129,18 @@ const styles = StyleSheet.create({
         marginRight: 5,
     },
     complaintCard: {
-        width: "90%",
         backgroundColor: "#fff",
         padding: 10,
         marginBottom: 10,
         borderRadius: 5,
-        shadowColor: "rgba(0, 0, 0, .7)",
-        shadowOffset: { width: -2, height: 5 },
+        shadowColor: "rgba(0, 0, 0, 1)",
+        shadowOffset: { width: 0, height: 5 },
         shadowOpacity: 0.5,
         shadowRadius: 3,
+        marginVertical: 5,
     },
     row1: {
-        flexDirection: "row",
-        justifyContent: "space-between",
+        justifyContent: "center",
         paddingTop: 5,
     },
     row2: {
@@ -141,8 +150,27 @@ const styles = StyleSheet.create({
     row3: {
         paddingTop: 5,
     },
+    row4: {
+        marginTop: 5,
+        padding: 5,
+        backgroundColor: 'rgba(0, 100, 255, .5)'
+    },
     textName: {
         color: "#333333",
         fontWeight: "bold",
+    },
+    textDepartment: {
+        color: "rgba(0, 100, 255, 1)",
+        fontWeight: "bold",
+    },
+    customRatingBarStyle: {
+        justifyContent: "center",
+        flexDirection: "row",
+        // marginTop: 30,
+    },
+    starImgStyle: {
+        width: 40,
+        height: 40,
+        resizeMode: "cover",
     },
 });

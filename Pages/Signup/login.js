@@ -98,12 +98,6 @@ export default function LoginPage({navigation}) {
                     </View>
                 </TouchableOpacity>
 
-                {/* <TouchableOpacity onPress={alert("You have logged with Gmail")}>
-                <View style={styles.loginAuth}>
-                    <Text>Login GoogleOAuth</Text>
-                </View>
-            </TouchableOpacity> */}
-
                 <TouchableOpacity
                     onPress={() => navigation.navigate("Sign Up")}
                 >
@@ -128,35 +122,7 @@ export function SignUpNav() {
     return <SignUpPage />;
 }
 
-// function HomeAppNav() {
-//     return <Navigation />;
-// }
-
 const Stack = createStackNavigator();
-
-// export default function LoginNav() {
-//     return (
-//         // <NavigationContainer>
-//             <Stack.Navigator initialRouteName={"Login Page"}>
-//                 <Stack.Screen
-//                     options={{ headerShown: false }}
-//                     name="Login Page"
-//                     component={LoginPage}
-//                 />
-//                 <Stack.Screen
-//                     options={{ headerShown: false }}
-//                     name="Sign Up"
-//                     component={SignUpNav}
-//                 />
-//                 {/* <Stack.Screen
-//                     options={{ headerShown: false }}
-//                     name="Home App Nav"
-//                     component={Navigation}
-//                 /> */}
-//             </Stack.Navigator>
-//         // </NavigationContainer>
-//     );
-// }
 
 const styles = StyleSheet.create({
     container: {

@@ -33,7 +33,7 @@ export function NaviTab({ navigation}) {
                     >
                         <View style={{ alignItems: "center" }}>
                             <Ionicons
-                                name="bookmark"
+                                name="newspaper"
                                 size={20}
                                 color="#808080"
                             />
@@ -46,7 +46,7 @@ export function NaviTab({ navigation}) {
                     >
                         <View style={{ alignItems: "center" }}>
                             <Ionicons
-                                name="newspaper"
+                                name="star"
                                 size={20}
                                 color="#808080"
                             />
@@ -58,8 +58,8 @@ export function NaviTab({ navigation}) {
                         onPress={() => navigation.navigate("Settings Page")}
                     >
                         <View style={{ alignItems: "center" }}>
-                            <Ionicons name="star" size={20} color="#808080" />
-                            <Text>Rate</Text>
+                            <Ionicons name="key" size={20} color="#808080" />
+                            <Text>Admin</Text>
                         </View>
                     </TouchableOpacity>
                 </View>
