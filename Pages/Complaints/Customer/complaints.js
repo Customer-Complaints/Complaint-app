@@ -5,6 +5,7 @@ import {
     ScrollView,
     TouchableOpacity,
     Text,
+    TextInput,
     View,
     Image,
 } from "react-native";
@@ -13,24 +14,50 @@ import AdminResponse from "./Admin/Components/AdminReply";
 
 const fDB_LOCATION = "complaints";
 
-export default function CustomerComplaint() {
+export default function CustomerComplaint({userFetch}) {
     const [users, setUsers] = React.useState([]);
 
-    React.useEffect(() => {
-        firestore.collection("complaints").onSnapshot((querySnapshot) => {
-            const users = [];
+    const [textResponse, setTextResponse] = React.useState();
 
-            querySnapshot.docs.forEach((doc) => {
-                const { name, retailName, stars, complaintMsg } = doc.data();
-                users.push({
-                    name,
-                    retailName,
-                    stars,
-                    complaintMsg,
-                });
+    const uploadTime = new Date();
+
+    const fDB_LOCATION = "complaints";
+
+    const toFireDB = (id, data) => {
+        firestore
+            .collection(fDB_LOCATION)
+            .doc("/documents")
+            .update({
+                adminResponse: textResponse,
+            })
+            .then(() => {
+                console.log("Response Sent"), alert("Complaint Response Sent");
+            })
+            .catch((error) => {
+                alert("Failed to send \nTry sending again");
             });
-            setUsers(users);
-        });
+    };
+
+    React.useEffect(() => {
+        firestore
+            .collection("complaints")
+            .orderBy("complaintDate", "desc")
+            .onSnapshot((querySnapshot) => {
+                const users = [];
+
+                querySnapshot.docs.forEach((doc) => {
+                    const { name, retailName, stars, complaintMsg, adminResponse } =
+                        doc.data();
+                    users.push({
+                        name,
+                        retailName,
+                        stars,
+                        complaintMsg,
+                        adminResponse,
+                    });
+                });
+                setUsers(users);
+            });
     }, []);
 
     return (
@@ -60,6 +87,9 @@ export default function CustomerComplaint() {
                     {users.map((user) => {
                         return (
                             <View style={styles.complaintCard}>
+                                <Text style={styles.textName}>
+                                        Complaint ID : UID 
+                                    </Text>
                                 <View style={styles.row1}>
                                     <Text style={styles.textName}>
                                         {user.name}
@@ -86,21 +116,61 @@ export default function CustomerComplaint() {
                                 </View>
 
                                 <View style={styles.row3}>
-                                    <Text >
-                                        {user.complaintMsg}
-                                    </Text>
+                                    <Text>{user.complaintMsg}</Text>
                                 </View>
 
-                                {/* <TouchableOpacity
-                                        onPress={()=><AdminResponse/>}
-                                        style={styles.replyBtn}
-                                    >
-                                <View style={styles.row4}>
-                                        <Text style={{color: '#fff', textAlign: 'center', fontWeight: "bold", fontSize: 15}}>Respond</Text>
-                                </View>
-                                </TouchableOpacity> */}
+                                <View
+                                    style={{
+                                        width: "100%",
+                                        // height: "20%",
+                                        borderWidth: 2,
+                                        borderRadius: 5,
+                                        borderColor: "rgba(160, 160, 160, 1)",
+                                        padding: 10,
+                                        marginTop: 10,
+                                    }}
+                                >
+                                    {/* <TextInput
+                                        style={{ color: "rgba(50, 50, 50, 1)" }}
+                                        onChangeText={setTextResponse}
+                                        placeholder="Subject"
+                                        value={textResponse}
+                                        maxLength={180}
+                                        multiline
+                                    /> */}
 
-                                <AdminResponse/>
+                                    <TextInput
+                                        key={user.adminResponse}
+                                        style={{ color: "rgba(50, 50, 50, 1)" }}
+                                        onChangeText={setTextResponse}
+                                        placeholder={user.adminResponse}
+                                        value={textResponse}
+                                        maxLength={180}
+                                        multiline
+                                    />
+                                </View>
+
+                                <TouchableOpacity
+                                    key={user.adminResponse}
+                                    // onPress={() => alert(user.name)}
+                                    onPress={toFireDB}
+                                    style={styles.replyBtn}
+                                >
+                                    <View style={styles.row4}>
+                                        <Text
+                                            style={{
+                                                color: "#fff",
+                                                textAlign: "center",
+                                                fontWeight: "bold",
+                                                fontSize: 15,
+                                            }}
+                                        >
+                                            Respond
+                                        </Text>
+                                    </View>
+                                </TouchableOpacity>
+
+                                {/* <AdminResponse/> */}
                             </View>
                         );
                     })}
@@ -162,11 +232,11 @@ const styles = StyleSheet.create({
     //     backgroundColor: 'rgba(0, 100, 255, .5)'
     // },
     replyBtn: {
-        width: '30%',
+        width: "30%",
         marginTop: 5,
         padding: 7,
         borderRadius: 5,
-        backgroundColor:'rgba(0, 100, 255, 1)'
+        backgroundColor: "rgba(0, 100, 255, 1)",
     },
     textName: {
         color: "#333333",

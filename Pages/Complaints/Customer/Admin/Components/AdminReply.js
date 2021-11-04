@@ -52,6 +52,7 @@ const AdminResponse = () => {
     const [visible, setVisible] = React.useState(false);
     const [textResponse, setTextResponse] = React.useState();
 
+    const uploadTime = new Date();
 
     const fDB_LOCATION = "complaints";
 
@@ -64,6 +65,9 @@ const AdminResponse = () => {
             })
             .then(() => {
                 console.log("Response Sent"), alert("Complaint Response Sent");
+            })
+            .catch((error) => {
+                alert("Failed to send \nTry sending again");
             });
     };
 
@@ -124,7 +128,7 @@ const AdminResponse = () => {
                         marginTop: 20,
                     }}
                     onPress={toFireDB}
-                    // onPress={()=>alert('Response Sent : \n' + textResponse)}
+                    // onPress={()=>alert(uploadTime)}
                 >
                     <View
                         style={{

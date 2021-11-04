@@ -20,8 +20,8 @@ export default function Rating() {
     const [userNme, setUserNme] = React.useState();
     const [retailNme, setRetailNme] = React.useState();
     const [textSubject, setTextSubject] = React.useState();
-    const [complaintIn, setComplaintIn] = React.useState();
-    const [textResponse, setTextResponse] = React.useState("");
+    const [textResponse, setTextResponse] = React.useState('');
+    const uploadTime = new Date();
 
     const [defaultRating, setDefaultRating] = React.useState(0);
     const [maxRating, setMaxRating] = React.useState([1, 2, 3, 4, 5]);
@@ -63,11 +63,13 @@ export default function Rating() {
     const toFireDB = () => {
         firestore
             .collection(fDB_LOCATION)
-            .set({
+            .add({
                 name: userNme,
                 retailName: retailNme,
                 stars: defaultRating,
-                complaintMsg: textSubject
+                complaintMsg: textSubject,
+                complaintDate: uploadTime,
+                adminResponse: textResponse
             })
             .then(() => {
                 console.log("Complaint Sent"), alert("Complaint Sent");
