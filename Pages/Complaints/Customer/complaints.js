@@ -26,7 +26,7 @@ export default function CustomerComplaint({userFetch}) {
     const toFireDB = (id, data) => {
         firestore
             .collection(fDB_LOCATION)
-            .doc("/documents")
+            .doc(user.id)
             .update({
                 adminResponse: textResponse,
             })
