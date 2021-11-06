@@ -16,7 +16,7 @@ export default function Complaints() {
     const [users, setUsers] = React.useState([]);
 
     React.useEffect(() => {
-        firestore.collection("complaints").orderBy('date', 'desc').onSnapshot((querySnapshot) => {
+        firestore.collection("complaints").orderBy('complaintDate', 'desc').onSnapshot((querySnapshot) => {
             const users = [];
 
             querySnapshot.docs.forEach((doc) => {
