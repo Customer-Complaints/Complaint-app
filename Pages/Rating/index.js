@@ -58,6 +58,7 @@ export default function Rating() {
 
     const ratingFdback = defaultRating; 
 
+    // give database collection name
     const fDB_LOCATION = "complaints";
 
     const toFireDB = () => {
@@ -119,7 +120,7 @@ export default function Rating() {
                             }}
                             onChangeText={setUserNme}
                             value={userNme}
-                            placeholder="Name"
+                            placeholder="Customer Name"
                         />
                     </View>
 
@@ -162,7 +163,7 @@ export default function Rating() {
                         <TextInput
                             style={{ color: "rgba(50, 50, 50, 1)" }}
                             onChangeText={setTextSubject}
-                            placeholder="Subject"
+                            placeholder="Message"
                             value={textSubject}
                             maxLength={180}
                             multiline
