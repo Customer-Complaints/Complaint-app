@@ -61,7 +61,7 @@ export default function LoginPage({navigation}) {
                 <View style={styles.titlePge}>
                     <Text
                         style={{
-                            color: "#666666",
+                            color: "#0d98ba",
                             fontSize: 18,
                             fontWeight: "bold",
                         }}
@@ -98,18 +98,22 @@ export default function LoginPage({navigation}) {
                     </View>
                 </TouchableOpacity>
 
+                <View style={styles.titlePge}>
+                    <Text>Are you a New User</Text>
+                </View>
+
                 <TouchableOpacity
                     onPress={() => navigation.navigate("Sign Up")}
                 >
                     <View style={styles.signupBtn}>
                         <Text
                             style={{
-                                color: "#000",
+                                color: "#fff",
                                 fontWeight: "bold",
                                 fontSize: 15,
                             }}
                         >
-                            New User
+                            Sign Up
                         </Text>
                     </View>
                 </TouchableOpacity>
@@ -171,7 +175,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         height: 40,
         width: 100,
-        backgroundColor: "cyan",
+        backgroundColor: "#0d98ba",
         borderRadius: 5,
         marginTop: 20,
     },
@@ -182,6 +186,10 @@ const styles = StyleSheet.create({
     signupBtn: {
         justifyContent: "center",
         alignItems: "center",
-        marginTop: 30,
+        height: 40,
+        width: 100,
+        backgroundColor: "#0d98ba",
+        borderRadius: 5,
+        marginTop: 20,
     },
 });

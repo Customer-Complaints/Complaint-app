@@ -97,7 +97,7 @@ export default function Rating() {
                     </Text>
                 </View>
 
-                <Text>Customer Complaint Ratings</Text>
+                <Text>Customer Complaint and Ratings</Text>
 
                 <View style={{ width: "80%" }}>
                     <View
@@ -214,7 +214,7 @@ export default function Rating() {
                                     alignItems: "center",
                                     width: "35%",
                                     height: 50,
-                                    backgroundColor: "cyan",
+                                    backgroundColor: "#0d98ba",
                                     borderRadius: 5,
                                     bottom: 0,
                                     padding: 10,

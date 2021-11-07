@@ -117,7 +117,7 @@ export function MainHomePage({ navigation }) {
                                                 <Text
                                                     style={{
                                                         textAlign: "center",
-                                                        color: "#808080",
+                                                        color: "#0d98ba",
                                                         fontWeight: "bold",
                                                     }}
                                                 >
@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
         alignSelf: "flex-start",
         fontSize: 20,
         fontWeight: "800",
-        color: "#2f80ed",
+        color: "#0d98ba",
         marginLeft: 10,
         padding: 5,
     },

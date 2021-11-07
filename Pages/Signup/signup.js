@@ -77,7 +77,15 @@ export default function SignUpPage({ navigation }) {
                 </View>
 
                 <View style={styles.titlePge}>
-                    <Text>New user SignUp</Text>
+                    <Text
+                        style={{
+                            color: "#0d98ba",
+                            fontSize: 18,
+                            fontWeight: "bold",
+                        }}
+                    >
+                        Sign Up
+                    </Text>
                 </View>
 
                 <View style={styles.loginFrm}>
@@ -114,12 +122,14 @@ export default function SignUpPage({ navigation }) {
                     </TouchableOpacity>
                 </View>
 
+                <Text>Already have an account</Text>
+
                 <View style={styles.signupBtn}>
-                    <Text>Already have an account</Text>
+                   
                     <TouchableOpacity
                         onPress={() => navigation.navigate("Login Page")}
                     >
-                        <Text style={{ fontWeight: "bold", fontSize: 18 }}>
+                        <Text style={{ color: "#fff",fontWeight: "bold" }}>
                             Login
                         </Text>
                     </TouchableOpacity>
@@ -176,9 +186,10 @@ const styles = StyleSheet.create({
         alignItems: "center",
         height: 40,
         width: 100,
-        backgroundColor: "cyan",
+        backgroundColor: "#0d98ba",
         borderRadius: 5,
         margin: 10,
+        marginBottom: 50,
     },
     loginAuth: {
         justifyContent: "center",
@@ -187,8 +198,12 @@ const styles = StyleSheet.create({
         margin: 40,
     },
     signupBtn: {
-        justifyContent: "flex-end",
+        justifyContent: "center",
         alignItems: "center",
-        margin: 50,
+        height: 40,
+        width: 100,
+        backgroundColor: "#0d98ba",
+        borderRadius: 5,
+        marginTop: 20,
     },
 });

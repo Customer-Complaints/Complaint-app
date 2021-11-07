@@ -64,12 +64,7 @@ export default function Complaints() {
                                     <Text style={styles.textName}>
                                         {user.name}
                                     </Text>
-                                    <Text style={styles.textName}>
-                                        Rating :{" "}
-                                        <Text style={{ color: "orange" }}>
-                                            {user.stars}
-                                        </Text>
-                                    </Text>
+                                   
                                 </View>
 
                                 <View style={styles.row2}>
@@ -78,11 +73,21 @@ export default function Complaints() {
                                     </Text>
                                     <Text
                                         style={{
-                                            color: "rgba(0, 100, 255, 1)",
+                                            color: "#0d98ba",
                                         }}
                                     >
                                         Department
                                     </Text>
+                                    </View>
+                                    <View>
+                                     <Text style={styles.textName}>
+                                        Rating :{" "}
+                                        <Text style={{ color: "orange" }}>
+                                            {user.stars}
+                                        </Text>
+                                        
+                                    </Text>
+                                   
                                 </View>
 
                                 <View style={styles.row3}>
@@ -153,14 +158,14 @@ const styles = StyleSheet.create({
     row4: {
         marginTop: 5,
         padding: 5,
-        backgroundColor: 'rgba(0, 100, 255, .5)'
+        backgroundColor: '#0d98ba'
     },
     textName: {
         color: "#333333",
         fontWeight: "bold",
     },
     textDepartment: {
-        color: "rgba(0, 100, 255, 1)",
+        color: "#0d98ba",
         fontWeight: "bold",
     },
     customRatingBarStyle: {
