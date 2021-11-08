@@ -67,14 +67,14 @@ export function MainHomePage({ navigation }) {
                             onPress={() => navigation.navigate("Rating Page")}
                         >
                             <Text style={styles.ccomplaints_text}>
-                                Rate a Provider
+                                Rate & Leave a complaint
                             </Text>
                         </TouchableOpacity>
                     </View>
 
                     <View style={styles.catServices}>
                         <View style={{ alignSelf: "flex-start" }}>
-                            <TouchableOpacity
+                            {/* <TouchableOpacity
                                 onPress={() =>
                                     navigation.navigate("Customer Comp Page")
                                 }
@@ -82,7 +82,7 @@ export function MainHomePage({ navigation }) {
                                 <Text style={styles.ccomplaints_text}>
                                     Leave a complaint
                                 </Text>
-                            </TouchableOpacity>
+                            </TouchableOpacity> */}
                             <Text style={{ marginLeft: 15 }}>
                                 Service by Category
                             </Text>
