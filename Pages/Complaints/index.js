@@ -8,7 +8,9 @@ import {
     View,
     Image,
 } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import { firestore } from "../../firebase";
+import { NaviBottomTab } from "../../Navigation/NavDrawer";
 
 const fDB_LOCATION = "complaints";
 
@@ -16,97 +18,112 @@ export default function Complaints() {
     const [users, setUsers] = React.useState([]);
 
     React.useEffect(() => {
-        firestore.collection("complaints").orderBy('complaintDate', 'desc').onSnapshot((querySnapshot) => {
-            const users = [];
+        firestore
+            .collection("complaints")
+            .orderBy("complaintDate", "desc")
+            .onSnapshot((querySnapshot) => {
+                const users = [];
 
-            querySnapshot.docs.forEach((doc) => {
-                const { name, retailName, stars, complaintMsg, adminResponse } = doc.data();
-                users.push({
-                    name,
-                    retailName,
-                    stars,
-                    complaintMsg,
-                    adminResponse
+                querySnapshot.docs.forEach((doc) => {
+                    const {
+                        name,
+                        retailName,
+                        stars,
+                        complaintMsg,
+                        adminResponse,
+                    } = doc.data();
+                    users.push({
+                        name,
+                        retailName,
+                        stars,
+                        complaintMsg,
+                        adminResponse,
+                    });
                 });
+                setUsers(users);
             });
-            setUsers(users);
-        });
     }, []);
 
     return (
-        <SafeAreaView style={styles.container}>
-            <View
-                style={{
-                    justifyContent: "flex-start",
-                    alignItems: "center",
-                    height: "100%",
-                    width: "100%",
-                }}
-            >
-                <View style={styles.headerName}>
-                    <Image
-                        style={styles.hdLogo}
-                        source={require("../../assets/voice_logo.jpg")}
-                    />
-                    <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-                        Voice Out App
-                    </Text>
-                </View>
-
-                <ScrollView
-                    showsVerticalScrollIndicator={true}
-                    style={{ width: "90%", height: "100%" }}
+        <>
+            <SafeAreaView style={styles.container}>
+                <View
+                    style={{
+                        justifyContent: "flex-start",
+                        alignItems: "center",
+                        height: "100%",
+                        width: "100%",
+                    }}
                 >
-                    {users.map((user) => {
-                        return (
-                            <View style={styles.complaintCard}>
-                                <View style={styles.row1}>
-                                    <Text style={styles.textName}>
-                                        {user.name}
-                                    </Text>
-                                   
-                                </View>
+                    <View style={styles.headerName}>
+                        <Image
+                            style={styles.hdLogo}
+                            source={require("../../assets/voice_logo.jpg")}
+                        />
+                        <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+                            Voice Out App
+                        </Text>
+                    </View>
 
-                                <View style={styles.row2}>
-                                    <Text style={styles.textDepartment}>
-                                        {user.retailName} -{" "}
-                                    </Text>
-                                    <Text
-                                        style={{
-                                            color: "#0d98ba",
-                                        }}
-                                    >
-                                        Department
-                                    </Text>
+                    <ScrollView
+                        showsVerticalScrollIndicator={true}
+                        style={{ width: "90%", height: "100%" }}
+                    >
+                        {users.map((user) => {
+                            return (
+                                <View style={styles.complaintCard}>
+                                    <View style={styles.row1}>
+                                        <Text style={styles.textName}>
+                                            {user.name}
+                                        </Text>
+                                    </View>
+
+                                    <View style={styles.row2}>
+                                        <Text
+                                            style={{
+                                                color: "#0d98ba",
+                                            }}
+                                        >
+                                            Service Provider -{" "}
+                                        </Text>
+                                        <Text style={styles.textDepartment}>
+                                            {user.retailName}
+                                        </Text>
                                     </View>
                                     <View>
-                                     <Text style={styles.textName}>
-                                        Rating :{" "}
-                                        <Text style={{ color: "orange" }}>
-                                            {user.stars}
+                                        <Text style={styles.textName}>
+                                            Rating :{" "}
+                                            <Text style={{ color: "orange" }}>
+                                                {user.stars}
+                                            </Text>
                                         </Text>
-                                        
-                                    </Text>
-                                   
-                                </View>
+                                    </View>
 
-                                <View style={styles.row3}>
-                                    <Text >
-                                        {user.complaintMsg}
-                                    </Text>
-                                </View>
+                                    <View style={styles.row3}>
+                                        <Text>{user.complaintMsg}</Text>
+                                    </View>
 
-                                <View style={styles.row4}>
-                                    <Text style={{ height: 50 }}>
-                                        {user.adminResponse}
-                                    </Text>
+                                    <View style={styles.row4}>
+                                        <Text
+                                            style={{
+                                                height: 50,
+                                                fontWeight: "700",
+                                                color: "#fff",
+                                                paddingHorizontal: 5,
+                                            }}
+                                        >
+                                            {user.adminResponse}
+                                        </Text>
+                                    </View>
                                 </View>
-                            </View>
-                        );
-                    })}
-                </ScrollView>
-            </View>
-        </SafeAreaView>
+                            );
+                        })}
+                    </ScrollView>
+                </View>
+            </SafeAreaView>
+            
+            {/* <NaviBottomTab/> */}
+        </>
     );
 }
 
@@ -158,7 +175,8 @@ const styles = StyleSheet.create({
     row4: {
         marginTop: 5,
         padding: 5,
-        backgroundColor: '#0d98ba'
+        borderRadius: 3,
+        backgroundColor: "#0d98ba",
     },
     textName: {
         color: "#333333",
@@ -177,5 +195,21 @@ const styles = StyleSheet.create({
         width: 40,
         height: 40,
         resizeMode: "cover",
+    },
+    navcontainer: {
+        justifyContent: "center",
+        width: "100%",
+        backgroundColor: "#fff",
+        bottom: 0,
+        padding: 5,
+        // position: "fixed",
+        shadowColor: "rgba(0, 0, 0, .3)",
+        shadowOffset: { width: 0, height: -1 },
+        shadowOpacity: 0.4,
+        shadowRadius: 3,
+    },
+    navicons: {
+        flexDirection: "row",
+        justifyContent: "space-evenly",
     },
 });

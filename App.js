@@ -14,6 +14,9 @@ import {
     RatingPage,
     SettingPage,
 } from "./Navigation/Navigation";
+import Rating from "./Pages/Rating";
+import Complaints from "./Pages/Complaints";
+import { NaviBottomTab } from "./Navigation/NavDrawer";
 
 const Stack = createStackNavigator();
 
@@ -60,6 +63,18 @@ export default function App() {
                     options={{ headerShown: false }}
                     name="Settings Page"
                     component={CustComplaintPage}
+                />
+
+
+<Stack.Screen
+                    options={{ headerShown: false }}
+                    name="Rate&ComplainPage"
+                    component={Rating}
+                />
+                <Stack.Screen
+                    options={{ headerShown: false }}
+                    name="ComplaintsDisplayPage"
+                    component={Complaints}
                 />
             </Stack.Navigator>
         </NavigationContainer>

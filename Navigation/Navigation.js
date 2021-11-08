@@ -5,7 +5,6 @@ import MainPage2 from "../Pages/WelcomeMain/Main2";
 import Complaints from "../Pages/Complaints";
 import CustomerComplaint from "../Pages/Complaints/Customer/complaints";
 import Rating from "../Pages/Rating";
-import MviewApp from "../Pages/WelcomeMain/Mview";
 import PickerComp from "../Pages/Components/Complaints/pickerComponet";
 
 
@@ -37,7 +36,7 @@ export function NaviTab({ navigation}) {
                                 size={20}
                                 color="#808080"
                             />
-                            <Text>Compl</Text>
+                            <Text>Complaints</Text>
                         </View>
                     </TouchableOpacity>
 
@@ -46,20 +45,11 @@ export function NaviTab({ navigation}) {
                     >
                         <View style={{ alignItems: "center" }}>
                             <Ionicons
-                                name="star"
+                                name="pencil"
                                 size={20}
                                 color="#808080"
                             />
                             <Text>Rate</Text>
-                        </View>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity
-                        onPress={() => navigation.navigate("Settings Page")}
-                    >
-                        <View style={{ alignItems: "center" }}>
-                            <Ionicons name="key" size={20} color="#808080" />
-                            <Text>Admin</Text>
                         </View>
                     </TouchableOpacity>
                 </View>

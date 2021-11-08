@@ -12,6 +12,7 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import { firestore, firestorage, firebaseApp } from "../../firebase";
+import { NaviBottomTab } from "../../Navigation/NavDrawer";
 
 // Can you run it on your phone. Try to take a picture in the cmplaint section
 const colors = {
@@ -27,7 +28,9 @@ export default function Rating() {
     const [userNme, setUserNme] = React.useState();
     const [retailNme, setRetailNme] = React.useState();
     const [textSubject, setTextSubject] = React.useState();
-    const [textResponse, setTextResponse] = React.useState("");
+    const [textResponse, setTextResponse] = React.useState(
+        "🔴 No Response from Service Provider"
+    );
 
     const [image, setImage] = React.useState("");
 
@@ -151,7 +154,7 @@ export default function Rating() {
                 complaintMsg: textSubject,
                 complaintDate: uploadTime,
                 adminResponse: textResponse,
-                complaintFile: `${storageRef}`
+                complaintFile: `${storageRef}`,
             })
             .then(() => {
                 console.log("Complaint Sent"), alert("Complaint Sent");
@@ -159,225 +162,230 @@ export default function Rating() {
     };
 
     return (
-        <SafeAreaView style={styles.container}>
-            <View
-                style={{
-                    justifyContent: "center",
-                    alignItems: "center",
-                    width: "100%",
-                    height: "100%",
-                }}
-            >
-                <View style={styles.headerName}>
-                    <Image
-                        style={styles.hdLogo}
-                        source={require("../../assets/voice_logo.jpg")}
-                    />
-                    <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-                        Voice Out App
-                    </Text>
-                </View>
-
-                <Text>Customer Complaint and Ratings</Text>
-
-                <View style={{ width: "80%" }}>
-                    <View
-                        style={{
-                            width: "100%",
-                            height: 50,
-                            justifyContent: "center",
-                            alignSelf: "flex-start",
-                            borderWidth: 2,
-                            borderRadius: 5,
-                            borderColor: "rgba(160, 160, 160, 1)",
-                            paddingHorizontal: 10,
-                        }}
-                    >
-                        <TextInput
-                            style={{
-                                color: "rgba(50, 50, 50, 1)",
-                                fontSize: 18,
-                                fontWeight: "700",
-                            }}
-                            onChangeText={setUserNme}
-                            value={userNme}
-                            placeholder="Customer Name"
+        <>
+            <SafeAreaView style={styles.container}>
+                <View
+                    style={{
+                        justifyContent: "center",
+                        alignItems: "center",
+                        width: "100%",
+                        height: "100%",
+                    }}
+                >
+                    <View style={styles.headerName}>
+                        <Image
+                            style={styles.hdLogo}
+                            source={require("../../assets/voice_logo.jpg")}
                         />
+                        <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+                            Voice Out App
+                        </Text>
                     </View>
-                    <View
-                        style={{
-                            width: "100%",
-                            height: 50,
-                            justifyContent: "center",
-                            alignSelf: "flex-start",
-                            borderWidth: 2,
-                            borderRadius: 5,
-                            borderColor: "rgba(160, 160, 160, 1)",
-                            paddingHorizontal: 10,
-                            marginTop: 10,
-                        }}
-                    >
-                        <TextInput
-                            style={{
-                                color: "rgba(50, 50, 50, 1)",
-                                fontSize: 18,
-                                fontWeight: "700",
-                            }}
-                            onChangeText={setRetailNme}
-                            value={retailNme}
-                            placeholder="Retail Name"
-                        />
-                    </View>
-                    <View
-                        style={{
-                            width: "100%",
-                            // height: 50,
-                            justifyContent: "center",
-                            alignSelf: "flex-start",
-                            borderWidth: 2,
-                            borderRadius: 5,
-                            borderColor: "rgba(160, 160, 160, 1)",
-                            paddingHorizontal: 10,
-                            marginTop: 10,
-                        }}
-                    >
+
+                    <Text>Customer Complaint and Ratings</Text>
+
+                    <View style={{ width: "80%" }}>
                         <View
                             style={{
                                 width: "100%",
-                                height: 200,
-                                padding: 10,
-                                marginTop: 10,
+                                height: 50,
+                                justifyContent: "center",
+                                alignSelf: "flex-start",
+                                borderWidth: 2,
+                                borderRadius: 5,
+                                borderColor: "rgba(160, 160, 160, 1)",
+                                paddingHorizontal: 10,
                             }}
                         >
                             <TextInput
-                                style={{ color: "rgba(50, 50, 50, 1)" }}
-                                onChangeText={setTextSubject}
-                                placeholder="Message"
-                                value={textSubject}
-                                maxLength={180}
-                                multiline
+                                style={{
+                                    color: "rgba(50, 50, 50, 1)",
+                                    fontSize: 18,
+                                    fontWeight: "700",
+                                }}
+                                onChangeText={setUserNme}
+                                value={userNme}
+                                placeholder="Customer Name"
                             />
                         </View>
                         <View
                             style={{
-                                flexDirection: "row",
-                                justifyContent: "space-around",
+                                width: "100%",
+                                height: 50,
+                                justifyContent: "center",
+                                alignSelf: "flex-start",
+                                borderWidth: 2,
+                                borderRadius: 5,
+                                borderColor: "rgba(160, 160, 160, 1)",
+                                paddingHorizontal: 10,
+                                marginTop: 10,
                             }}
                         >
-                            <TouchableOpacity onPress={pickImage}>
-                                <View
-                                    style={{
-                                        // width: "40%",
-                                        borderWidth: 2,
-                                        borderRadius: 5,
-                                        borderColor: "rgba(160, 160, 160, 1)",
-                                        marginTop: 10,
-                                        marginBottom: 10,
-                                    }}
-                                >
-                                    <Text
-                                        style={{
-                                            textAlign: "center",
-                                            fontSize: 20,
-                                            fontWeight: "bold",
-                                            color: "rgba(100, 100, 100, 1)",
-                                        }}
-                                    >
-                                        Attach file
-                                    </Text>
-                                </View>
-                            </TouchableOpacity>
-
-                            <View style={{}}>
-                                <Image
-                                    source={{ uri: image }}
-                                    style={{ width: 50, height: 50 }}
+                            <TextInput
+                                style={{
+                                    color: "rgba(50, 50, 50, 1)",
+                                    fontSize: 18,
+                                    fontWeight: "700",
+                                }}
+                                onChangeText={setRetailNme}
+                                value={retailNme}
+                                placeholder="Retail Name"
+                            />
+                        </View>
+                        <View
+                            style={{
+                                width: "100%",
+                                // height: 50,
+                                justifyContent: "center",
+                                alignSelf: "flex-start",
+                                borderWidth: 2,
+                                borderRadius: 5,
+                                borderColor: "rgba(160, 160, 160, 1)",
+                                paddingHorizontal: 10,
+                                marginTop: 10,
+                            }}
+                        >
+                            <View
+                                style={{
+                                    width: "100%",
+                                    height: 200,
+                                    padding: 10,
+                                    marginTop: 10,
+                                }}
+                            >
+                                <TextInput
+                                    style={{ color: "rgba(50, 50, 50, 1)" }}
+                                    onChangeText={setTextSubject}
+                                    placeholder="Message"
+                                    value={textSubject}
+                                    maxLength={180}
+                                    multiline
                                 />
                             </View>
-                        </View>
-                    </View>
-
-                    <View
-                        style={{
-                            flexDirection: "row",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            marginTop: 20,
-                            marginBottom: 20,
-                        }}
-                    >
-                        <View style={{ alignSelf: "flex-start" }}>
-                            <CustomRatingBar />
-                        </View>
-
-                        <View style={{ fontSize: 20 }}>
-                            <Text
+                            <View
                                 style={{
-                                    fontSize: 20,
-                                    fontWeight: "bold",
-                                    color: "rgba(100, 100, 100, 1)",
+                                    flexDirection: "row",
+                                    justifyContent: "space-around",
                                 }}
                             >
-                                {ratingFdback}
-                            </Text>
-                        </View>
-                    </View>
-                    <View style={{}}>
-                        {!uploading ? (
-                            <TouchableOpacity
-                                activeOpacity={0.7}
-                                style={{
-                                    justifyContent: "center",
-                                    alignContent: "center",
-                                    alignSelf: "flex-start",
-                                    marginTop: 20,
-                                }}
-                                onPress={toFireDB}
-                            >
-                                <View
-                                    style={{
-                                        flexDirection: "row",
-                                        alignItems: "center",
-                                        width: "35%",
-                                        height: 50,
-                                        backgroundColor: "cyan",
-                                        borderRadius: 5,
-                                        bottom: 0,
-                                        padding: 10,
-                                    }}
-                                >
-                                    <Text
+                                <TouchableOpacity onPress={pickImage}>
+                                    <View
                                         style={{
-                                            color: "#fff",
-                                            fontSize: 20,
-                                            fontWeight: "bold",
-                                            textAlign: "center",
+                                            // width: "40%",
+                                            borderWidth: 2,
+                                            borderRadius: 5,
+                                            borderColor:
+                                                "rgba(160, 160, 160, 1)",
+                                            marginTop: 10,
+                                            marginBottom: 10,
                                         }}
                                     >
-                                        Send
-                                    </Text>
+                                        <Text
+                                            style={{
+                                                textAlign: "center",
+                                                fontSize: 20,
+                                                fontWeight: "bold",
+                                                color: "rgba(100, 100, 100, 1)",
+                                            }}
+                                        >
+                                            Attach file
+                                        </Text>
+                                    </View>
+                                </TouchableOpacity>
 
-                                    <Ionicons
-                                        name="send"
-                                        size={30}
-                                        color="#fff"
-                                        style={{ paddingLeft: 10 }}
+                                <View style={{}}>
+                                    <Image
+                                        source={{ uri: image }}
+                                        style={{ width: 50, height: 50 }}
                                     />
                                 </View>
-                                {console.log(
-                                    "Stars : " +
-                                        defaultRating +
-                                        "\nRetail" +
-                                        retailNme
-                                )}
-                            </TouchableOpacity>
-                        ) : (
-                            <ActivityIndicator size="large" color="#000" />
-                        )}
+                            </View>
+                        </View>
+
+                        <View
+                            style={{
+                                flexDirection: "row",
+                                justifyContent: "space-between",
+                                alignItems: "center",
+                                marginTop: 20,
+                                marginBottom: 20,
+                            }}
+                        >
+                            <View style={{ alignSelf: "flex-start" }}>
+                                <CustomRatingBar />
+                            </View>
+
+                            <View style={{ fontSize: 20 }}>
+                                <Text
+                                    style={{
+                                        fontSize: 20,
+                                        fontWeight: "bold",
+                                        color: "rgba(100, 100, 100, 1)",
+                                    }}
+                                >
+                                    {ratingFdback}
+                                </Text>
+                            </View>
+                        </View>
+                        <View style={{}}>
+                            {!uploading ? (
+                                <TouchableOpacity
+                                    activeOpacity={0.7}
+                                    style={{
+                                        justifyContent: "center",
+                                        alignContent: "center",
+                                        alignSelf: "flex-start",
+                                        marginTop: 20,
+                                    }}
+                                    onPress={toFireDB}
+                                >
+                                    <View
+                                        style={{
+                                            flexDirection: "row",
+                                            alignItems: "center",
+                                            width: "35%",
+                                            height: 50,
+                                            backgroundColor: "cyan",
+                                            borderRadius: 5,
+                                            bottom: 0,
+                                            padding: 10,
+                                        }}
+                                    >
+                                        <Text
+                                            style={{
+                                                color: "#fff",
+                                                fontSize: 20,
+                                                fontWeight: "bold",
+                                                textAlign: "center",
+                                            }}
+                                        >
+                                            Send
+                                        </Text>
+
+                                        <Ionicons
+                                            name="send"
+                                            size={30}
+                                            color="#fff"
+                                            style={{ paddingLeft: 10 }}
+                                        />
+                                    </View>
+                                    {console.log(
+                                        "Stars : " +
+                                            defaultRating +
+                                            "\nRetail" +
+                                            retailNme
+                                    )}
+                                </TouchableOpacity>
+                            ) : (
+                                <ActivityIndicator size="large" color="#000" />
+                            )}
+                        </View>
                     </View>
                 </View>
-            </View>
-        </SafeAreaView>
+            </SafeAreaView>
+
+            {/* <NaviBottomTab/> */}
+        </>
     );
 }
 
@@ -431,5 +439,21 @@ const styles = StyleSheet.create({
     //     borderColor: "rgba(160, 160, 160, 1)",
     //     marginTop: 5,
     //     padding: 10
-    // }
+    // },
+    navcontainer: {
+      justifyContent: "center",
+      width: "100%",
+      backgroundColor: "#fff",
+      bottom: 0,
+      padding: 5,
+      // position: "fixed",
+      shadowColor: "rgba(0, 0, 0, .3)",
+      shadowOffset: { width: 0, height: -1 },
+      shadowOpacity: 0.4,
+      shadowRadius: 3,
+  },
+  navicons: {
+      flexDirection: "row",
+      justifyContent: "space-evenly",
+  },
 });

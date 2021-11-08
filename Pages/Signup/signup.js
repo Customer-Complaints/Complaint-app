@@ -89,13 +89,6 @@ export default function SignUpPage({ navigation }) {
                 </View>
 
                 <View style={styles.loginFrm}>
-                    {/* <View style={styles.loginDetails}>
-                        <TextInput
-                            onChangeText={setTextName}
-                            placeholder="Username"
-                            value={textName}
-                        />
-                    </View> */}
 
                     <View style={styles.loginDetails}>
                         <TextInput
