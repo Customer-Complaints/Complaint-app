@@ -8,6 +8,7 @@ import {
     TouchableOpacity,
     Image,
     ActivityIndicator,
+    ToastAndroid,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
@@ -157,7 +158,8 @@ export default function Rating() {
                 complaintFile: `${storageRef}`,
             })
             .then(() => {
-                console.log("Complaint Sent"), alert("Complaint Sent");
+                console.log("Complaint Sent"), ToastAndroid.showWithGravity("Complaint Sent", ToastAndroid.SHORT,
+                ToastAndroid.CENTER);
             });
     };
 

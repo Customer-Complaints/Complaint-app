@@ -9,19 +9,19 @@ import {
     Image,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { firestore } from "../../firebase";
-import { NaviBottomTab } from "../../Navigation/NavDrawer";
+import { firestore } from "../../../firebase";
+import { NaviBottomTab } from "../../../Navigation/NavDrawer";
 
 const fDB_LOCATION = "complaints";
 
-export default function Complaints() {
+export default function hotelComplaints() {
     const [users, setUsers] = React.useState([]);
 
     React.useEffect(() => {
         firestore
             .collection("complaints")
             .orderBy("complaintDate", "desc")
-            // .where('retailName', 'in', ['Travel'])
+            .where("retailName", "in", ["Hotel", "hotel", "Hotel ", "hotel "])
             .onSnapshot((querySnapshot) => {
                 const users = [];
 
@@ -59,7 +59,7 @@ export default function Complaints() {
                     <View style={styles.headerName}>
                         <Image
                             style={styles.hdLogo}
-                            source={require("../../assets/voice_logo.jpg")}
+                            source={require("../../../assets/voice_logo.jpg")}
                         />
                         <Text style={{ fontSize: 20, fontWeight: "bold" }}>
                             Voice Out App
@@ -70,59 +70,76 @@ export default function Complaints() {
                         showsVerticalScrollIndicator={true}
                         style={{ width: "90%", height: "100%" }}
                     >
-                        {users.map((user) => {
-                            return (
-                                <View style={styles.complaintCard}>
-                                    <View style={styles.row1}>
-                                        <Text style={styles.textName}>
-                                            {user.name}
-                                        </Text>
-                                    </View>
-
-                                    <View style={styles.row2}>
-                                        <Text
-                                            style={{
-                                                color: "#0d98ba",
-                                            }}
-                                        >
-                                            Service Provider -{" "}
-                                        </Text>
-                                        <Text style={styles.textDepartment}>
-                                            {user.retailName}
-                                        </Text>
-                                    </View>
-                                    <View>
-                                        <Text style={styles.textName}>
-                                            Rating :{" "}
-                                            <Text style={{ color: "orange" }}>
-                                                {user.stars}
+                        {users.length > 0 ? (
+                            users.map((user) => {
+                                return (
+                                    <View style={styles.complaintCard}>
+                                        <View style={styles.row1}>
+                                            <Text style={styles.textName}>
+                                                {user.name}
                                             </Text>
-                                        </Text>
-                                    </View>
+                                        </View>
 
-                                    <View style={styles.row3}>
-                                        <Text>{user.complaintMsg}</Text>
-                                    </View>
+                                        <View style={styles.row2}>
+                                            <Text
+                                                style={{
+                                                    color: "#0d98ba",
+                                                }}
+                                            >
+                                                Service Provider -{" "}
+                                            </Text>
+                                            <Text style={styles.textDepartment}>
+                                                {user.retailName}
+                                            </Text>
+                                        </View>
+                                        <View>
+                                            <Text style={styles.textName}>
+                                                Rating :{" "}
+                                                <Text
+                                                    style={{ color: "orange" }}
+                                                >
+                                                    {user.stars}
+                                                </Text>
+                                            </Text>
+                                        </View>
 
-                                    <View style={styles.row4}>
-                                        <Text
-                                            style={{
-                                                height: 50,
-                                                fontWeight: "700",
-                                                color: "#fff",
-                                                paddingHorizontal: 5,
-                                            }}
-                                        >
-                                            {user.adminResponse}
-                                        </Text>
+                                        <View style={styles.row3}>
+                                            <Text>{user.complaintMsg}</Text>
+                                        </View>
+
+                                        <View style={styles.row4}>
+                                            <Text
+                                                style={{
+                                                    height: 50,
+                                                    fontWeight: "700",
+                                                    color: "#fff",
+                                                    paddingHorizontal: 5,
+                                                }}
+                                            >
+                                                {user.adminResponse}
+                                            </Text>
+                                        </View>
                                     </View>
-                                </View>
-                            );
-                        })}
+                                );
+                            })
+                        ) : (
+                            <View
+                                style={{
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                }}
+                            >
+                                <Text
+                                    style={{ fontSize: 15, fontWeight: "bold" }}
+                                >
+                                    No Complaints made in this section
+                                </Text>
+                            </View>
+                        )}
                     </ScrollView>
                 </View>
             </SafeAreaView>
-            
+
             {/* <NaviBottomTab/> */}
         </>
     );

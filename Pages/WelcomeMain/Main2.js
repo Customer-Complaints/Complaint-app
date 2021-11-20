@@ -6,6 +6,7 @@ import {
     View,
     TouchableOpacity,
     Image,
+    ToastAndroid,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { FlatGrid } from "react-native-super-grid";
@@ -16,19 +17,27 @@ import {
     RatingPage,
     CustComplaintPage,
 } from "../../Navigation/Navigation";
+import retailComplaints from "../Complaints/Categories/retail";
+import transportComplaints from "../Complaints/Categories/transport";
+import bankingComplaints from "../Complaints/Categories/banking";
+import foodComplaints from "../Complaints/Categories/food";
+import telecomComplaints from "../Complaints/Categories/telecom";
+import hotelComplaints from "../Complaints/Categories/hotel";
+import medicalComplaints from "../Complaints/Categories/medical";
+import gvtComplaints from "../Complaints/Categories/government";
 
 export function MainHomePage({ navigation }) {
     const [items, setItems] = React.useState([
-        { name: "Retail", icon: "card" },
-        { name: "Transport", icon: "bus" },
-        { name: "Banking", icon: "bed" },
-        { name: "Food", icon: "pizza" },
-        { name: "Automotive", icon: "car" },
-        { name: "ISP", icon: "card" },
-        { name: "Travel", icon: "bus" },
-        { name: "Hotel", icon: "bed" },
-        { name: "Medical", icon: "pizza" },
-        { name: "Govt", icon: "car" },
+        { name: "Retail", icon: "card", page: "Retail" },
+        { name: "Transport", icon: "bus", page: "Transport" },
+        { name: "Banking", icon: "card", page: "Banking" },
+        { name: "Food", icon: "pizza", page: "Food" },
+        { name: "Automotive", icon: "car", page: "Transport" },
+        { name: "ISP", icon: "wifi", page: "Internet" },
+        { name: "Travel", icon: "bus", page: "Transport" },
+        { name: "Hotel", icon: "bed", page: "Hotel" },
+        { name: "Medical", icon: "medical", page: "Medical" },
+        { name: "Govt", icon: "business", page: "Government" },
     ]);
 
     return (
@@ -74,21 +83,14 @@ export function MainHomePage({ navigation }) {
 
                     <View style={styles.catServices}>
                         <View style={{ alignSelf: "flex-start" }}>
-                            {/* <TouchableOpacity
-                                onPress={() =>
-                                    navigation.navigate("Customer Comp Page")
-                                }
-                            >
-                                <Text style={styles.ccomplaints_text}>
-                                    Leave a complaint
-                                </Text>
-                            </TouchableOpacity> */}
                             <Text style={{ marginLeft: 15 }}>
                                 Service by Category
                             </Text>
                         </View>
 
-                        <View style={{width: "100%", justifyContent: 'center'}}>
+                        <View
+                            style={{ width: "100%", justifyContent: "center" }}
+                        >
                             <FlatGrid
                                 itemDimension={90}
                                 data={items}
@@ -96,10 +98,12 @@ export function MainHomePage({ navigation }) {
                                 renderItem={({ item }) => (
                                     <TouchableOpacity
                                         onPress={() =>
-                                            navigation.navigate("Rating Page") +
-                                            alert(
-                                                "Department selected is : " +
-                                                    item.name
+                                            navigation.navigate(item.page) +
+                                            ToastAndroid.show(
+                                                "Selected " +
+                                                    item.name,
+                                                    ToastAndroid.SHORT,
+        ToastAndroid.CENTER,
                                             )
                                         }
                                     >
@@ -161,6 +165,48 @@ export default function MainPage2() {
                 name="Customer Comp Page"
                 component={CustComplaintPage}
             />
+
+            <Stack.Screen
+                options={{ headerShown: true }}
+                name="Retail"
+                component={retailComplaints}
+            />
+            <Stack.Screen
+                options={{ headerShown: true }}
+                name="Transport"
+                component={transportComplaints}
+            />
+            <Stack.Screen
+                options={{ headerShown: true }}
+                name="Banking"
+                component={bankingComplaints}
+            />
+            <Stack.Screen
+                options={{ headerShown: true }}
+                name="Food"
+                component={foodComplaints}
+            />
+
+            <Stack.Screen
+                options={{ headerShown: true }}
+                name="Internet"
+                component={telecomComplaints}
+            />
+            <Stack.Screen
+                options={{ headerShown: true }}
+                name="Hotel"
+                component={hotelComplaints}
+            />
+            <Stack.Screen
+                options={{ headerShown: true }}
+                name="Medical"
+                component={medicalComplaints}
+            />
+            <Stack.Screen
+                options={{ headerShown: true }}
+                name="Government"
+                component={gvtComplaints}
+            />
         </Stack.Navigator>
     );
 }
@@ -171,8 +217,8 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        height: '100%',
-        backgroundColor: '#fff'
+        height: "100%",
+        backgroundColor: "#fff",
     },
     headerName: {
         flexDirection: "row",
@@ -192,7 +238,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "flex-start",
         width: "85%",
-        height:'10%',
+        height: "10%",
         borderRadius: 5,
         shadowColor: "rgba(0, 0, 0, .7)",
         shadowOffset: { width: -2, height: 5 },
@@ -213,7 +259,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         width: "85%",
-        height:'60%',
+        height: "60%",
         marginVertical: 15,
         // backgroundColor: 'green'
     },

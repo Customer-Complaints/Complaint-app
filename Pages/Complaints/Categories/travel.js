@@ -9,19 +9,19 @@ import {
     Image,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { firestore } from "../../firebase";
-import { NaviBottomTab } from "../../Navigation/NavDrawer";
+import { firestore } from "../../../firebase";
+import { NaviBottomTab } from "../../../Navigation/NavDrawer";
 
 const fDB_LOCATION = "complaints";
 
-export default function Complaints() {
+export default function travelComplaints() {
     const [users, setUsers] = React.useState([]);
 
     React.useEffect(() => {
         firestore
             .collection("complaints")
             .orderBy("complaintDate", "desc")
-            // .where('retailName', 'in', ['Travel'])
+            .where('retailName', 'in', ['Travel'])
             .onSnapshot((querySnapshot) => {
                 const users = [];
 
@@ -59,7 +59,7 @@ export default function Complaints() {
                     <View style={styles.headerName}>
                         <Image
                             style={styles.hdLogo}
-                            source={require("../../assets/voice_logo.jpg")}
+                            source={require("../../../assets/voice_logo.jpg")}
                         />
                         <Text style={{ fontSize: 20, fontWeight: "bold" }}>
                             Voice Out App
