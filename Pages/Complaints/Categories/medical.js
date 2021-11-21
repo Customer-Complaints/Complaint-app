@@ -21,7 +21,7 @@ export default function medicalComplaints() {
         firestore
             .collection("complaints")
             .orderBy("complaintDate", "desc")
-            .where("retailName", "in", ["Medical", "medical", "Medical ", "medical "])
+            .where("retailCategory", "in", ["Medical", "medical", "Medical ", "medical "])
             .onSnapshot((querySnapshot) => {
                 const users = [];
 
@@ -29,6 +29,7 @@ export default function medicalComplaints() {
                     const {
                         name,
                         retailName,
+                        retailCategory,
                         stars,
                         complaintMsg,
                         adminResponse,
@@ -36,6 +37,7 @@ export default function medicalComplaints() {
                     users.push({
                         name,
                         retailName,
+                        retailCategory,
                         stars,
                         complaintMsg,
                         adminResponse,
@@ -86,7 +88,7 @@ export default function medicalComplaints() {
                                                     color: "#0d98ba",
                                                 }}
                                             >
-                                                Service Provider -{" "}
+                                                {user.retailCategory} -{" "}
                                             </Text>
                                             <Text style={styles.textDepartment}>
                                                 {user.retailName}

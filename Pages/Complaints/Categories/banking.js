@@ -21,7 +21,7 @@ export default function bankingComplaints() {
         firestore
             .collection("complaints")
             .orderBy("complaintDate", "desc")
-            .where("retailName", "in", ["Banking", "banking", "Banking ", "banking "])
+            .where("retailCategory", "in", ["Banking", "banking", "Banking ", "banking "])
             .onSnapshot((querySnapshot) => {
                 const users = [];
 
@@ -29,6 +29,7 @@ export default function bankingComplaints() {
                     const {
                         name,
                         retailName,
+                        retailCategory,
                         stars,
                         complaintMsg,
                         adminResponse,
@@ -36,6 +37,7 @@ export default function bankingComplaints() {
                     users.push({
                         name,
                         retailName,
+                        retailCategory,
                         stars,
                         complaintMsg,
                         adminResponse,
@@ -86,7 +88,7 @@ export default function bankingComplaints() {
                                                     color: "#0d98ba",
                                                 }}
                                             >
-                                                Service Provider -{" "}
+                                                {user.retailCategory} -{" "}
                                             </Text>
                                             <Text style={styles.textDepartment}>
                                                 {user.retailName}

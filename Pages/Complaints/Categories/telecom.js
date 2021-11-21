@@ -21,7 +21,7 @@ export default function telecomComplaints() {
         firestore
             .collection("complaints")
             .orderBy("complaintDate", "desc")
-            .where("retailName", "in", ["Telecom", "telecom", "Telecom ", "telecom "])
+            .where("retailCategory", "in", ["Telecom", "telecom", "Telecom ", "telecom "])
             .onSnapshot((querySnapshot) => {
                 const users = [];
 
@@ -29,6 +29,7 @@ export default function telecomComplaints() {
                     const {
                         name,
                         retailName,
+                        retailCategory,
                         stars,
                         complaintMsg,
                         adminResponse,
@@ -36,6 +37,7 @@ export default function telecomComplaints() {
                     users.push({
                         name,
                         retailName,
+                        retailCategory,
                         stars,
                         complaintMsg,
                         adminResponse,
@@ -86,7 +88,7 @@ export default function telecomComplaints() {
                                                     color: "#0d98ba",
                                                 }}
                                             >
-                                                Service Provider -{" "}
+                                                {user.retailCategory} -{" "}
                                             </Text>
                                             <Text style={styles.textDepartment}>
                                                 {user.retailName}

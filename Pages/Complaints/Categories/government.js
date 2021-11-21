@@ -21,7 +21,7 @@ export default function gvtComplaints() {
         firestore
             .collection("complaints")
             .orderBy("complaintDate", "desc")
-            .where("retailName", "in", ["Government", "government", "Government ", "government "])
+            .where("retailCategory", "in", ["Government", "government", "Government ", "government "])
             .onSnapshot((querySnapshot) => {
                 const users = [];
 
@@ -29,6 +29,7 @@ export default function gvtComplaints() {
                     const {
                         name,
                         retailName,
+                        retailCategory,
                         stars,
                         complaintMsg,
                         adminResponse,
@@ -36,6 +37,7 @@ export default function gvtComplaints() {
                     users.push({
                         name,
                         retailName,
+                        retailCategory,
                         stars,
                         complaintMsg,
                         adminResponse,
@@ -86,7 +88,7 @@ export default function gvtComplaints() {
                                                     color: "#0d98ba",
                                                 }}
                                             >
-                                                Service Provider -{" "}
+                                                {user.retailCategory} -{" "}
                                             </Text>
                                             <Text style={styles.textDepartment}>
                                                 {user.retailName}

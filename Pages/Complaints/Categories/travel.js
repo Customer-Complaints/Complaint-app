@@ -21,7 +21,7 @@ export default function travelComplaints() {
         firestore
             .collection("complaints")
             .orderBy("complaintDate", "desc")
-            .where('retailName', 'in', ['Travel'])
+            .where('retailCategory', 'in', ['Travel'])
             .onSnapshot((querySnapshot) => {
                 const users = [];
 
@@ -29,6 +29,7 @@ export default function travelComplaints() {
                     const {
                         name,
                         retailName,
+                        retailCategory,
                         stars,
                         complaintMsg,
                         adminResponse,
@@ -36,6 +37,7 @@ export default function travelComplaints() {
                     users.push({
                         name,
                         retailName,
+                        retailCategory,
                         stars,
                         complaintMsg,
                         adminResponse,
@@ -85,7 +87,7 @@ export default function travelComplaints() {
                                                 color: "#0d98ba",
                                             }}
                                         >
-                                            Service Provider -{" "}
+                                            {user.retailCategory} -{" "}
                                         </Text>
                                         <Text style={styles.textDepartment}>
                                             {user.retailName}

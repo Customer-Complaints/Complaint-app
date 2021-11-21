@@ -16,13 +16,12 @@ const fDB_LOCATION = "complaints";
 
 export default function transportComplaints() {
     const [users, setUsers] = React.useState([]);
-    const [loadingComplaint, setLoadingComplaint] = React.useState(false);
 
     React.useEffect(() => {
         firestore
             .collection("complaints")
             .orderBy("complaintDate", "desc")
-            .where("retailName", "in", ["Transport", "transport", "Transport ", "transport "])
+            .where("retailCategory", "in", ["Transport", "transport", "Transport ", "transport "])
             .onSnapshot((querySnapshot) => {
                 const users = [];
 
@@ -30,6 +29,7 @@ export default function transportComplaints() {
                     const {
                         name,
                         retailName,
+                        retailCategory,
                         stars,
                         complaintMsg,
                         adminResponse,
@@ -37,6 +37,7 @@ export default function transportComplaints() {
                     users.push({
                         name,
                         retailName,
+                        retailCategory,
                         stars,
                         complaintMsg,
                         adminResponse,
@@ -87,7 +88,7 @@ export default function transportComplaints() {
                                                     color: "#0d98ba",
                                                 }}
                                             >
-                                                Service Provider -{" "}
+                                                {user.retailCategory} -{" "}
                                             </Text>
                                             <Text style={styles.textDepartment}>
                                                 {user.retailName}
