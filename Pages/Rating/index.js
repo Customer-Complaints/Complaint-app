@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
+import Select, { SelectItem } from "@redmin_delishaj/react-native-select";
 import { firestore, firestorage, firebaseApp } from "../../firebase";
 import { NaviBottomTab } from "../../Navigation/NavDrawer";
 
@@ -39,6 +40,34 @@ export default function Rating() {
 
     const uploadTime = new Date();
 
+    // Dropdown
+    const selectData = [
+        { text: "Retail", value: "Retail" },
+        { text: "Transport", value: "Transport" },
+        { text: "Banking", value: "Banking" },
+        { text: "Food", value: "Food" },
+        { text: "Automotive", value: "Automotive" },
+        { text: "ISP", value: "ISP" },
+        { text: "Travel", value: "Travel" },
+        { text: "Hotel", value: "Hotel" },
+        { text: "Medical", value: "Medical" },
+        { text: "Govt", value: "Govt" },
+    ];
+
+    const config = {
+        fontSize: 15,
+        backgroundColor: "white",
+        textColor: "#404040",
+        selectedBackgroundColor: "white",
+        selectedTextColor: "#0d98ba",
+        selectedFontWeight: "bold",
+        borderWidth: 2,
+        borderColor: "rgba(160, 160, 160, 1)",
+    };
+
+    const [selectedItem, setSelectedItem] = React.useState();
+
+    // Rating
     const [defaultRating, setDefaultRating] = React.useState(0);
     const [maxRating, setMaxRating] = React.useState([1, 2, 3, 4, 5]);
 
@@ -151,6 +180,7 @@ export default function Rating() {
             .add({
                 name: userNme,
                 retailName: retailNme,
+                retailCategory: selectedItem,
                 stars: defaultRating,
                 complaintMsg: textSubject,
                 complaintDate: uploadTime,
@@ -158,8 +188,12 @@ export default function Rating() {
                 complaintFile: `${storageRef}`,
             })
             .then(() => {
-                console.log("Complaint Sent"), ToastAndroid.showWithGravity("Complaint Sent", ToastAndroid.SHORT,
-                ToastAndroid.CENTER);
+                console.log("Complaint Sent"),
+                    ToastAndroid.showWithGravity(
+                        "Complaint Sent",
+                        ToastAndroid.SHORT,
+                        ToastAndroid.CENTER
+                    );
             });
     };
 
@@ -221,6 +255,7 @@ export default function Rating() {
                                 borderColor: "rgba(160, 160, 160, 1)",
                                 paddingHorizontal: 10,
                                 marginTop: 10,
+                                marginBottom: 10,
                             }}
                         >
                             <TextInput
@@ -234,6 +269,15 @@ export default function Rating() {
                                 placeholder="Retail Name"
                             />
                         </View>
+
+                        {/* <View> */}
+                        <Select
+                            data={selectData}
+                            onSelect={(text) => setSelectedItem(text)}
+                            value={selectedItem}
+                            config={config}
+                        />
+                        {/* </View> */}
                         <View
                             style={{
                                 width: "100%",
@@ -443,19 +487,19 @@ const styles = StyleSheet.create({
     //     padding: 10
     // },
     navcontainer: {
-      justifyContent: "center",
-      width: "100%",
-      backgroundColor: "#fff",
-      bottom: 0,
-      padding: 5,
-      // position: "fixed",
-      shadowColor: "rgba(0, 0, 0, .3)",
-      shadowOffset: { width: 0, height: -1 },
-      shadowOpacity: 0.4,
-      shadowRadius: 3,
-  },
-  navicons: {
-      flexDirection: "row",
-      justifyContent: "space-evenly",
-  },
+        justifyContent: "center",
+        width: "100%",
+        backgroundColor: "#fff",
+        bottom: 0,
+        padding: 5,
+        // position: "fixed",
+        shadowColor: "rgba(0, 0, 0, .3)",
+        shadowOffset: { width: 0, height: -1 },
+        shadowOpacity: 0.4,
+        shadowRadius: 3,
+    },
+    navicons: {
+        flexDirection: "row",
+        justifyContent: "space-evenly",
+    },
 });
