@@ -21,7 +21,7 @@ export default function telecomComplaints() {
         firestore
             .collection("complaints")
             .orderBy("complaintDate", "desc")
-            .where("retailCategory", "in", ["Telecom", "telecom", "Telecom ", "telecom "])
+            .where("retailCategory", "in", ["Internet & Tech", "internet & tech", "Internet & Tech ", "internet & tech "])
             .onSnapshot((querySnapshot) => {
                 const users = [];
 

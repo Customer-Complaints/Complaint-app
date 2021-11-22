@@ -47,7 +47,7 @@ export default function Rating() {
         { text: "Banking", value: "Banking" },
         { text: "Food", value: "Food" },
         { text: "Automotive", value: "Automotive" },
-        { text: "ISP", value: "ISP" },
+        { text: "Internet & Tech", value: "Internet & Tech" },
         { text: "Travel", value: "Travel" },
         { text: "Hotel", value: "Hotel" },
         { text: "Medical", value: "Medical" },

@@ -33,7 +33,7 @@ export function MainHomePage({ navigation }) {
         { name: "Banking", icon: "card", page: "Banking" },
         { name: "Food", icon: "pizza", page: "Food" },
         { name: "Automotive", icon: "car", page: "Transport" },
-        { name: "ISP", icon: "wifi", page: "Internet" },
+        { name: "Internet & Tech", icon: "wifi", page: "Internet" },
         { name: "Travel", icon: "bus", page: "Transport" },
         { name: "Hotel", icon: "bed", page: "Hotel" },
         { name: "Medical", icon: "medical", page: "Medical" },
