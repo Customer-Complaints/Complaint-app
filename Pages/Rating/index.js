@@ -174,7 +174,9 @@ export default function Rating() {
                 });
             }
         );
+    };
 
+    const toFireStoreDB = () => {
         firestore
             .collection(fDB_LOCATION)
             .add({
@@ -185,14 +187,14 @@ export default function Rating() {
                 complaintMsg: textSubject,
                 complaintDate: uploadTime,
                 adminResponse: textResponse,
-                complaintFile: `${storageRef}`,
+                complaintFile: `complaint_files/${uploadTime}`,
             })
             .then(() => {
                 console.log("Complaint Sent"),
                     ToastAndroid.showWithGravity(
                         "Complaint Sent",
                         ToastAndroid.SHORT,
-                        ToastAndroid.CENTER
+                        ToastAndroid.BOTTOM
                     );
             });
     };
@@ -308,6 +310,7 @@ export default function Rating() {
                                     multiline
                                 />
                             </View>
+
                             <View
                                 style={{
                                     flexDirection: "row",
@@ -340,10 +343,22 @@ export default function Rating() {
                                 </TouchableOpacity>
 
                                 <View style={{}}>
-                                    <Image
-                                        source={{ uri: image }}
-                                        style={{ width: 50, height: 50 }}
-                                    />
+                                    {!uploading ? (
+                                        <TouchableOpacity onPress={toFireDB}>
+                                            <Image
+                                                source={{ uri: image }}
+                                                style={{
+                                                    width: 50,
+                                                    height: 50,
+                                                }}
+                                            />
+                                        </TouchableOpacity>
+                                    ) : (
+                                        <ActivityIndicator
+                                            size="large"
+                                            color="#000"
+                                        />
+                                    )}
                                 </View>
                             </View>
                         </View>
@@ -374,57 +389,57 @@ export default function Rating() {
                             </View>
                         </View>
                         <View style={{}}>
-                            {!uploading ? (
-                                <TouchableOpacity
-                                    activeOpacity={0.7}
+                            {/* {!uploading ? ( */}
+                            <TouchableOpacity
+                                activeOpacity={0.7}
+                                style={{
+                                    justifyContent: "center",
+                                    alignContent: "center",
+                                    alignSelf: "flex-start",
+                                    marginTop: 20,
+                                }}
+                                onPress={toFireStoreDB}
+                            >
+                                <View
                                     style={{
-                                        justifyContent: "center",
-                                        alignContent: "center",
-                                        alignSelf: "flex-start",
-                                        marginTop: 20,
+                                        flexDirection: "row",
+                                        alignItems: "center",
+                                        width: "35%",
+                                        height: 50,
+                                        backgroundColor: "cyan",
+                                        borderRadius: 5,
+                                        bottom: 0,
+                                        padding: 10,
                                     }}
-                                    onPress={toFireDB}
                                 >
-                                    <View
+                                    <Text
                                         style={{
-                                            flexDirection: "row",
-                                            alignItems: "center",
-                                            width: "35%",
-                                            height: 50,
-                                            backgroundColor: "cyan",
-                                            borderRadius: 5,
-                                            bottom: 0,
-                                            padding: 10,
+                                            color: "#fff",
+                                            fontSize: 20,
+                                            fontWeight: "bold",
+                                            textAlign: "center",
                                         }}
                                     >
-                                        <Text
-                                            style={{
-                                                color: "#fff",
-                                                fontSize: 20,
-                                                fontWeight: "bold",
-                                                textAlign: "center",
-                                            }}
-                                        >
-                                            Send
-                                        </Text>
+                                        Send
+                                    </Text>
 
-                                        <Ionicons
-                                            name="send"
-                                            size={30}
-                                            color="#fff"
-                                            style={{ paddingLeft: 10 }}
-                                        />
-                                    </View>
-                                    {console.log(
-                                        "Stars : " +
-                                            defaultRating +
-                                            "\nRetail" +
-                                            retailNme
-                                    )}
-                                </TouchableOpacity>
-                            ) : (
+                                    <Ionicons
+                                        name="send"
+                                        size={30}
+                                        color="#fff"
+                                        style={{ paddingLeft: 10 }}
+                                    />
+                                </View>
+                                {console.log(
+                                    "Stars : " +
+                                        defaultRating +
+                                        "\nRetail" +
+                                        retailNme
+                                )}
+                            </TouchableOpacity>
+                            {/* ) : (
                                 <ActivityIndicator size="large" color="#000" />
-                            )}
+                            )} */}
                         </View>
                     </View>
                 </View>
