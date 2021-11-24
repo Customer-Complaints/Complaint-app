@@ -109,7 +109,7 @@ export default function travelComplaints() {
                                     <View style={styles.row4}>
                                         <Text
                                             style={{
-                                                height: 50,
+                                                // height: 50,
                                                 fontWeight: "700",
                                                 color: "#fff",
                                                 paddingHorizontal: 5,
