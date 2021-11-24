@@ -151,7 +151,7 @@ export default function Rating() {
 
         const storageRef = firestorage
             .ref("complaint_files")
-            .child(new Date().toISOString());
+            .child(retailNme + new Date().toISOString());
         const snapshot = storageRef.put(blob);
 
         snapshot.on(
@@ -187,7 +187,7 @@ export default function Rating() {
                 complaintMsg: textSubject,
                 complaintDate: uploadTime,
                 adminResponse: textResponse,
-                complaintFile: `complaint_files/${uploadTime}`,
+                complaintFile: `complaint_files/${retailNme}-${new Date().toISOString()}`,
             })
             .then(() => {
                 console.log("Complaint Sent"),
